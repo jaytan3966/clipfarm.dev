@@ -1,103 +1,412 @@
-import Image from "next/image";
+import Link from "next/link"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import {
+  CheckCircle,
+  ChevronRight,
+  Play,
+  Scissors,
+  Sparkles,
+  Zap,
+  Clock,
+  Users,
+  Twitter,
+  Linkedin,
+  Youtube,
+  Instagram,
+  Mail,
+} from "lucide-react"
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex min-h-screen flex-col">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-slate-900 shadow-lg">
+        <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0 mx-auto px-4 md:px-6">
+          <div className="flex gap-6 md:gap-10">
+            <Link href="#hero" className="flex items-center space-x-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+                <Scissors className="h-4 w-4 text-white" />
+              </div>
+              <span className="inline-block font-bold text-xl text-white">clipfarm.ai</span>
+            </Link>
+            <nav className="hidden gap-6 md:flex">
+              <Link
+                href="#features"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                Features
+              </Link>
+              <Link
+                href="#pricing"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                Pricing
+              </Link>
+              <Link
+                href="#cta"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                Get Started
+              </Link>
+              <Link
+                href="#footer"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
+          <div className="flex flex-1 items-center justify-end space-x-4">
+            <nav className="flex items-center space-x-2">
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+              >
+                Get Started Free
+              </Button>
+            </nav>
+          </div>
         </div>
+      </header>
+
+      <main className="flex-1 pt-16">
+        <section
+          id="hero"
+          className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-br from-purple-50 via-white to-pink-50 min-h-screen flex items-center"
+        >
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] items-center">
+              <div className="flex flex-col justify-center space-y-4 text-center lg:text-left">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-sm text-purple-700">
+                    <Sparkles className="mr-1 h-3 w-3" />
+                    AI-Powered Video Clips
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Create viral clips in seconds with AI
+                  </h1>
+                  <p className="max-w-[98vw] text-gray-500 md:text-xl">
+                    Transform your long-form content into engaging short clips automatically. Perfect for social media,
+                    marketing, and content creators who want to maximize their reach.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2 min-[400px]:flex-row items-center just">
+                   <Button
+                    size="lg"
+                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500"
+                  >
+                    Start Creating Free <ChevronRight className="h-4 w-4" />
+                  </Button>
+                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500">
+                    <Play className="h-4 w-4 " />
+                    Watch Demo
+                  </Button>
+                </div>
+                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <div className="flex items-center">
+                    <CheckCircle className="mr-1 h-4 w-4 text-green-500" />
+                    <div className="text-gray-500">No credit card required</div>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle className="mr-1 h-4 w-4 text-green-500" />
+                    <div className="text-gray-500">Free 7-day trial</div>
+                    
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl blur-xl opacity-30"></div>
+                <Image
+                  src="/placeholder.svg?height=550&width=550"
+                  width={550}
+                  height={550}
+                  alt="ClipFarm.ai Dashboard"
+                  className="relative mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center shadow-2xl sm:w-full lg:order-last"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32 min-h-screen flex items-center">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-1 text-sm text-white">
+                  Features
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Powerful AI-driven features</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl">
+                  Everything you need to create, edit, and optimize video clips for maximum engagement across all
+                  platforms.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 xl:grid-cols-4">
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
+                  <Zap className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold">AI Auto-Clipping</h3>
+                <p className="text-center text-muted-foreground">
+                  Automatically identify and extract the most engaging moments from your Twitch VODs using advanced
+                  analytics.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
+                  <Sparkles className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold">Smart Editing</h3>
+                <p className="text-center text-muted-foreground">
+                  Add captions, transitions, and effects automatically. Our AI understands context to enhance your clips
+                  perfectly.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
+                  <Clock className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold">Batch Processing</h3>
+                <p className="text-center text-muted-foreground">
+                  Process multiple videos simultaneously and create dozens of clips in minutes, not hours.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
+                  <Users className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold">Multi-Platform Export</h3>
+                <p className="text-center text-muted-foreground">
+                  Optimize clips for TikTok, Instagram, YouTube Shorts, and more with platform-specific formatting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-muted min-h-screen flex items-center">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-1 text-sm text-white">
+                  Pricing
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Choose your plan</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl">
+                  Start free and scale as you grow. All plans include our core AI features.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
+              <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center rounded-full border border-purple-500 bg-purple-50 px-2.5 py-0.5 text-xs font-semibold text-purple-700">
+                    For Casuals
+                  </div>
+                  <h3 className="text-2xl font-bold">Hobby</h3>
+                  <p className="text-muted-foreground">Perfect for trying out clipfarm.ai</p>
+                </div>
+                <div className="mt-4 flex items-baseline">
+                  <span className="text-3xl font-bold">$0</span>
+                  <span className="ml-1 text-muted-foreground">/month</span>
+                </div>
+                <ul className="mt-6 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>10 clips per month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>720p export quality</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Basic AI features</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Community support</span>
+                  </li>
+                </ul>
+                <Button className="mt-6 bg-transparent" variant="outline">
+                  Get Started Free
+                </Button>
+              </div>
+              <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm ring-2 ring-purple-500">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center rounded-full border border-purple-500 bg-purple-50 px-2.5 py-0.5 text-xs font-semibold text-purple-700">
+                    Most Popular
+                  </div>
+                  <h3 className="text-2xl font-bold">Pro</h3>
+                  <p className="text-muted-foreground">For content creators and small teams</p>
+                </div>
+                <div className="mt-4 flex items-baseline">
+                  <span className="text-3xl font-bold">$29</span>
+                  <span className="ml-1 text-muted-foreground">/month</span>
+                </div>
+                <ul className="mt-6 space-y-2">
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>100 clips per month</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>4K export quality</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Advanced AI features</span>
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                    <span>Batch processing</span>
+                  </li>
+                 
+                </ul>
+                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                  Start Pro Trial
+                </Button>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="cta"
+          className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-white to-pink-50 min-h-screen flex items-center"
+        >
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="grid items-center justify-center gap-4 text-center">
+              <div className="space-y-3 text-gray-500">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Ready to create viral clips?</h2>
+                <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
+                  Join thousands of content creators who are already using clipfarm.ai to grow their audience and
+                  engagement.
+                </p>
+              </div>
+              <div className="mx-auto w-full max-w-sm space-y-2">
+                <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+                  <Button
+                    size="lg"
+                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500"
+                  >
+                    Start Creating Free <ChevronRight className="h-4 w-4" />
+                  </Button>
+                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500">
+                    <Play className="h-4 w-4 " />
+                    Watch Demo
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  No credit card required • 7-day free trial • Cancel anytime
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer id="footer" className="w-full border-t bg-background">
+        <div className="container py-10 mx-auto px-4 md:px-6">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+                  <Scissors className="h-4 w-4 text-white" />
+                </div>
+                <span className="font-bold text-xl">clipfarm.ai</span>
+              </div>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                Create viral clips in seconds with AI-powered video editing and optimization.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="#features" className="text-muted-foreground hover:text-foreground">
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#pricing" className="text-muted-foreground hover:text-foreground">
+                    Pricing
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold">Company</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold">Support</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link href="#" className="text-muted-foreground hover:text-foreground">
+                    Status
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
+            <p className="text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} clipfarm.ai. All rights reserved.
+            </p>
+            <div className="flex gap-4">
+              <Link
+                href="#"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Twitter className="h-5 w-5" />
+                <span className="sr-only">Twitter</span>
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">YouTube</span>
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+                <span className="sr-only">Instagram</span>
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Linkedin className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link
+                href="#"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Mail className="h-5 w-5" />
+                <span className="sr-only">Email</span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
