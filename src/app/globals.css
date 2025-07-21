@@ -66,7 +66,7 @@
   }
 }
 
-/* Smooth scrolling and optional snap behavior */
+/* Optimized smooth scrolling and snap behavior */
 html {
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
@@ -75,7 +75,8 @@ html {
 /* Only main content sections participate in snapping */
 #hero,
 #features,
-#pricing {
+#pricing,
+#cta {
   scroll-snap-align: start;
 }
 

@@ -60,7 +60,7 @@ export default function LandingPage() {
             <nav className="flex items-center space-x-2">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
               >
                 Get Started Free
               </Button>
@@ -93,11 +93,11 @@ export default function LandingPage() {
                 <div className="flex flex-col gap-2 min-[400px]:flex-row items-center just">
                    <Button
                     size="lg"
-                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500"
+                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
                   >
                     Start Creating Free <ChevronRight className="h-4 w-4" />
                   </Button>
-                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500">
+                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />
                     Watch Demo
                   </Button>
@@ -117,7 +117,7 @@ export default function LandingPage() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl blur-xl opacity-30"></div>
                 <Image
-                  src="/placeholder.svg?height=550&width=550"
+                  src="/cat-space.gif?height=550&width=550"
                   width={550}
                   height={550}
                   alt="ClipFarm.ai Dashboard"
@@ -229,7 +229,7 @@ export default function LandingPage() {
                     <span>Community support</span>
                   </li>
                 </ul>
-                <Button className="mt-6 bg-transparent" variant="outline">
+                <Button className="mt-6 bg-transparent hover:cursor-pointer" variant="outline">
                   Get Started Free
                 </Button>
               </div>
@@ -264,7 +264,7 @@ export default function LandingPage() {
                   </li>
                  
                 </ul>
-                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer">
                   Start Pro Trial
                 </Button>
               </div>
@@ -272,9 +272,8 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
-        <section
-          id="cta"
+        <section id="cta">
+        <div
           className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-white to-pink-50 min-h-screen flex items-center"
         >
           <div className="container px-4 md:px-6 mx-auto">
@@ -290,25 +289,20 @@ export default function LandingPage() {
                 <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
                   <Button
                     size="lg"
-                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500"
+                    className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
                   >
                     Start Creating Free <ChevronRight className="h-4 w-4" />
                   </Button>
-                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500">
+                  <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />
                     Watch Demo
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  No credit card required • 7-day free trial • Cancel anytime
-                </p>
               </div>
             </div>
           </div>
-        </section>
-      </main>
-
-      <footer id="footer" className="w-full border-t bg-background">
+        </div>
+         <footer className="w-full border-t bg-background">
         <div className="container py-10 mx-auto px-4 md:px-6">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-3">
@@ -318,7 +312,7 @@ export default function LandingPage() {
                 </div>
                 <span className="font-bold text-xl">clipfarm.ai</span>
               </div>
-              <p className="text-sm text-muted-foreground max-w-xs">
+              <p className="text-sm max-w-xs text-muted-foreground">
                 Create viral clips in seconds with AI-powered video editing and optimization.
               </p>
             </div>
@@ -407,6 +401,10 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+      </section>
+      </main>
+
+     
     </div>
   )
 }
