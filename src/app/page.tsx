@@ -1,6 +1,10 @@
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { AuthModal } from "@/components/auth-modal"
 import {
   CheckCircle,
   ChevronRight,
@@ -18,6 +22,12 @@ import {
 } from "lucide-react"
 
 export default function LandingPage() {
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+
+  const handleGetStarted = () => {
+    setAuthModalOpen(true)
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-slate-900 shadow-lg">
@@ -49,7 +59,7 @@ export default function LandingPage() {
                 Get Started
               </Link>
               <Link
-                href="#footer"
+                href="#cta"
                 className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
               >
                 Contact
@@ -61,8 +71,9 @@ export default function LandingPage() {
               <Button
                 size="sm"
                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
+                onClick={handleGetStarted}
               >
-                Get Started Free
+                Get Started For Free
               </Button>
             </nav>
           </div>
@@ -94,8 +105,9 @@ export default function LandingPage() {
                    <Button
                     size="lg"
                     className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
+                    onClick={handleGetStarted}
                   >
-                    Start Creating Free <ChevronRight className="h-4 w-4" />
+                    Start Creating For Free <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />
@@ -229,8 +241,8 @@ export default function LandingPage() {
                     <span>Community support</span>
                   </li>
                 </ul>
-                <Button className="mt-6 bg-transparent hover:cursor-pointer" variant="outline">
-                  Get Started Free
+                <Button className="mt-6 bg-transparent hover:cursor-pointer" variant="outline" onClick={handleGetStarted}>
+                  Get Started For Free
                 </Button>
               </div>
               <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm ring-2 ring-purple-500">
@@ -264,7 +276,8 @@ export default function LandingPage() {
                   </li>
                  
                 </ul>
-                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer">
+                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
+                onClick={handleGetStarted}>
                   Start Pro Trial
                 </Button>
               </div>
@@ -290,8 +303,9 @@ export default function LandingPage() {
                   <Button
                     size="lg"
                     className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
+                    onClick={handleGetStarted}
                   >
-                    Start Creating Free <ChevronRight className="h-4 w-4" />
+                    Start Creating For Free <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />
@@ -339,11 +353,7 @@ export default function LandingPage() {
                     About
                   </Link>
                 </li>
-                <li>
-                  <Link href="#" className="text-muted-foreground hover:text-foreground">
-                    Contact
-                  </Link>
-                </li>
+
               </ul>
             </div>
             <div className="space-y-3">
@@ -404,7 +414,7 @@ export default function LandingPage() {
       </section>
       </main>
 
-     
+     <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
     </div>
   )
 }
