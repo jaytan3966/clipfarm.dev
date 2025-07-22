@@ -2,13 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Mail, Lock, User, Eye, EyeOff, Github, Chrome } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Mail, Lock, User, Eye, EyeOff, Github, Chrome, Ban } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
 
 
@@ -21,11 +22,15 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [isSignUp, setIsSignUp] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   })
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setError('');
+  }, [isSignUp])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +44,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       setError("Password must be at least 6 characters.");
       return;
     }
+    const username = formData.username;
     const email = formData.email;
     const password = formData.password;
     const { data, error: authError } =
@@ -51,7 +57,26 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       setError(authError.message);
       return;
     }
-    console.log("Form submitted:", formData)
+    const session = await supabase.auth.getSession();
+    const token = session?.data?.session?.access_token;
+    const response = await fetch('/api/supabase-auth', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        id: data.user?.id,
+        username: username.trim(),
+        email: email.toLowerCase().trim(), 
+      }),
+    });
+    if (!response.ok) {
+      const insertError = await response.json()
+      console.error("Insert error:", insertError);
+      setError(`Signup succeeded but user creation failed: ${insertError}`);
+    } 
+    
     onOpenChange(false);
   }
 
@@ -91,15 +116,15 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {isSignUp && (
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Username</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
-                  id="name"
-                  name="name"
+                  id="username"
+                  name="username"
                   type="text"
-                  placeholder="Enter your full name"
-                  value={formData.name}
+                  placeholder="Enter your username"
+                  value={formData.username}
                   onChange={handleInputChange}
                   className="pl-10"
                   required={isSignUp}
@@ -176,6 +201,18 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             GitHub
           </Button>
         </div>
+        {error ? 
+        
+          <Alert className="bg-gradient-to-r from-red-400 to-pink-400 rounded-lg">
+            <Ban></Ban>
+            {isSignUp ? <AlertTitle className="font-medium text-white">SIGN UP ERROR!</AlertTitle> : 
+            <AlertTitle className="font-medium text-white">LOGIN ERROR!</AlertTitle>
+            }
+            <AlertDescription className="text-sm text-white mt-1">{error}!</AlertDescription>
+          </Alert>
+        :
+        <div></div>}
+        
 
         <div className="text-center text-sm">
           {isSignUp ? (
