@@ -56,12 +56,6 @@ export default function LandingPage() {
                 href="#cta"
                 className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
               >
-                Get Started
-              </Link>
-              <Link
-                href="#cta"
-                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
-              >
                 Contact
               </Link>
             </nav>

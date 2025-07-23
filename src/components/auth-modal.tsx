@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Mail, Lock, User, Eye, EyeOff, Github, Chrome, Ban } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
+import { useRouter } from "next/navigation"
 
 
 interface AuthModalProps {
@@ -27,6 +28,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     password: "",
   })
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     setError('');
@@ -57,26 +60,29 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       setError(authError.message);
       return;
     }
+
     const session = await supabase.auth.getSession();
     const token = session?.data?.session?.access_token;
-    const response = await fetch('/api/supabase-auth', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        id: data.user?.id,
-        username: username.trim(),
-        email: email.toLowerCase().trim(), 
-      }),
-    });
-    if (!response.ok) {
-      const insertError = await response.json()
-      console.error("Insert error:", insertError);
-      setError(`Signup succeeded but user creation failed: ${insertError}`);
-    } 
-    
+    if (isSignUp){
+      const response = await fetch('/api/supabase-auth', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id: data.user?.id,
+          username: username.trim(),
+          email: email.toLowerCase().trim(), 
+        }),
+      });
+      if (!response.ok) {
+        const insertError = await response.json()
+        console.error("Insert error:", insertError);
+        setError(`Signup succeeded but user creation failed: ${insertError}`);
+      } 
+    }
+    router.push("/dashboard");
     onOpenChange(false);
   }
 
