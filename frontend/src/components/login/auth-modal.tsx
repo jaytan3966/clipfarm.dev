@@ -89,14 +89,24 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const handleGitHubSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
+      options: {
+      redirectTo: `${window.location.origin}/dashboard`
+    }
     });
-    if (error) setError("Github sign-in failed. Try again.");
+    if (error) {
+      setError("Github sign-in failed. Try again.")
+    }
   };
-    const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+      redirectTo: `${window.location.origin}/dashboard`
+    }
     });
-    if (error) setError("Google sign-in failed. Try again.");
+    if (error) {
+      setError("Google sign-in failed. Try again.")
+    }
   };
   
 

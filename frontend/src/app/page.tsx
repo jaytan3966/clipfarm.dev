@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { AuthModal } from "@/components/auth-modal"
+import { AuthModal } from "@/components/login/auth-modal"
+import { supabase } from "@/lib/supabaseClient"
 import {
   CheckCircle,
   ChevronRight,
@@ -21,11 +23,25 @@ import {
   Mail,
 } from "lucide-react"
 
+
 export default function LandingPage() {
   const [authModalOpen, setAuthModalOpen] = useState(false)
+  const router = useRouter();
 
+  const checkUser = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session){
+      router.push("/dashboard");
+    } else {
+      router.push("/");
+    }
+  };
+  
   const handleGetStarted = () => {
-    setAuthModalOpen(true)
+    checkUser();
+    setTimeout(() => {
+      setAuthModalOpen(true);
+    }, 200);
   }
 
   return (
@@ -42,19 +58,19 @@ export default function LandingPage() {
             <nav className="hidden gap-6 md:flex">
               <Link
                 href="#features"
-                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white duration-500"
               >
                 Features
               </Link>
               <Link
                 href="#pricing"
-                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white duration-500"
               >
                 Pricing
               </Link>
               <Link
                 href="#cta"
-                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                className="flex items-center text-sm font-medium text-slate-300 transition-colors hover:text-white duration-500"
               >
                 Contact
               </Link>
@@ -64,7 +80,7 @@ export default function LandingPage() {
             <nav className="flex items-center space-x-2">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer duration-500"
                 onClick={handleGetStarted}
               >
                 Get Started For Free
@@ -149,7 +165,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 xl:grid-cols-4">
-              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow duration-500">
                 <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
                   <Zap className="h-6 w-6" />
                 </div>
@@ -159,7 +175,7 @@ export default function LandingPage() {
                   analytics.
                 </p>
               </div>
-              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow duration-500">
                 <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
                   <Sparkles className="h-6 w-6" />
                 </div>
@@ -169,7 +185,7 @@ export default function LandingPage() {
                   perfectly.
                 </p>
               </div>
-              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow duration-500">
                 <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
                   <Clock className="h-6 w-6" />
                 </div>
@@ -178,7 +194,7 @@ export default function LandingPage() {
                   Process multiple videos simultaneously and create dozens of clips in minutes, not hours.
                 </p>
               </div>
-              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 shadow-sm hover:shadow-md transition-shadow duration-500">
                 <div className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-3 text-white">
                   <Users className="h-6 w-6" />
                 </div>
@@ -235,7 +251,7 @@ export default function LandingPage() {
                     <span>Community support</span>
                   </li>
                 </ul>
-                <Button className="mt-6 bg-transparent hover:cursor-pointer" variant="outline" onClick={handleGetStarted}>
+                <Button className="mt-6 bg-transparent hover:cursor-pointer duration-500" variant="outline" onClick={handleGetStarted}>
                   Get Started For Free
                 </Button>
               </div>
@@ -270,7 +286,7 @@ export default function LandingPage() {
                   </li>
                  
                 </ul>
-                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
+                <Button className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer duration-500"
                 onClick={handleGetStarted}>
                   Start Pro Trial
                 </Button>
@@ -328,12 +344,12 @@ export default function LandingPage() {
               <h4 className="text-sm font-semibold">Product</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="#features" className="text-muted-foreground hover:text-foreground">
+                  <Link href="#features" className="text-muted-foreground hover:text-foreground duration-500">
                     Features
                   </Link>
                 </li>
                 <li>
-                  <Link href="#pricing" className="text-muted-foreground hover:text-foreground">
+                  <Link href="#pricing" className="text-muted-foreground hover:text-foreground duration-500">
                     Pricing
                   </Link>
                 </li>
@@ -343,7 +359,7 @@ export default function LandingPage() {
               <h4 className="text-sm font-semibold">Company</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="#" className="text-muted-foreground hover:text-foreground">
+                  <Link href="#" className="text-muted-foreground hover:text-foreground duration-500">
                     About
                   </Link>
                 </li>
@@ -354,7 +370,7 @@ export default function LandingPage() {
               <h4 className="text-sm font-semibold">Support</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="#" className="text-muted-foreground hover:text-foreground">
+                  <Link href="#" className="text-muted-foreground hover:text-foreground duration-500">
                     Status
                   </Link>
                 </li>
@@ -368,35 +384,35 @@ export default function LandingPage() {
             <div className="flex gap-4">
               <Link
                 href="#"
-                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors duration-500"
               >
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
               <Link
                 href="#"
-                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors duration-500"
               >
                 <Youtube className="h-5 w-5" />
                 <span className="sr-only">YouTube</span>
               </Link>
               <Link
                 href="#"
-                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors duration-500"
               >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
               <Link
                 href="#"
-                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors duration-500"
               >
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
               <Link
                 href="#"
-                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center justify-center rounded-md p-2 text-muted-foreground hover:text-foreground transition-colors duration-500"
               >
                 <Mail className="h-5 w-5" />
                 <span className="sr-only">Email</span>
