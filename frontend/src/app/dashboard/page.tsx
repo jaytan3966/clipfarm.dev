@@ -51,6 +51,7 @@ import {
   Sparkles,
   Calendar,
   Filter,
+  Trash
 } from "lucide-react"
 
 function AppSidebar() {
@@ -106,7 +107,7 @@ function AppSidebar() {
         <Collapsible
           open={openSections.pastClips}
           onOpenChange={() => toggleSection("pastClips")}
-          className="group/collapsible mb-4"
+          className="group/collapsible"
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
@@ -149,7 +150,7 @@ function AppSidebar() {
         <Collapsible
           open={openSections.tokens}
           onOpenChange={() => toggleSection("tokens")}
-          className="group/collapsible mb-4"
+          className="group/collapsible"
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
@@ -328,7 +329,7 @@ export default function Dashboard() {
         <SidebarInset className="flex-1">
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center gap-2 border-b border-purple-200 bg-white/90 backdrop-blur-sm px-6 shadow-sm">
-            <SidebarTrigger className="-ml-1" />
+            <SidebarTrigger className="-ml-1 text-gray-500" />
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
@@ -369,15 +370,15 @@ export default function Dashboard() {
               {pastClips.map((clip) => (
                 <Card
                   key={clip.id}
-                  className="overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow border border-gray-200"
+                  className="overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow border border-gray-200 pt-0"
                 >
                   <div className="relative">
                     <Image
                       src="/cat-space.gif"
-                      width={550}
-                      height={550}
+                      width={750}
+                      height={750}
                       alt="ClipFarm.ai Dashboard"
-                      className="relative mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center shadow-2xl sm:w-full lg:order-last"
+                      className="block w-full h-auto aspect-video rounded-t-xl object-cover object-center shadow-2xl"
                     />
                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-medium">
                       {clip.duration}
@@ -408,12 +409,12 @@ export default function Dashboard() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 bg-black/20 hover:bg-black/40 text-white backdrop-blur-sm"
+                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm duration-500"
                           >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="end" className="bg-black/60 text-white backdrop-blur-sm">
                           <DropdownMenuItem>
                             <Play className="mr-2 h-4 w-4" />
                             Preview
@@ -426,13 +427,15 @@ export default function Dashboard() {
                             <Share2 className="mr-2 h-4 w-4" />
                             Share
                           </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
                   </div>
-                  <CardContent className="p-4">
+                  <CardContent>
                     <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-900">{clip.title}</h3>
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
                       <span className="font-medium">{clip.platform}</span>
