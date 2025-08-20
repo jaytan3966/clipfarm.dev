@@ -125,7 +125,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             {isSignUp ? "Create your account" : "Welcome back"}
           </DialogTitle>
           <DialogDescription className="text-center">
-            {isSignUp ? "Start creating viral clips with AI in seconds" : "Sign in to continue to clipfarm.ai"}
+            {isSignUp ? "Start creating viral clips with AI in seconds" : "Sign in to continue to clipfarm.dev"}
           </DialogDescription>
         </DialogHeader>
 

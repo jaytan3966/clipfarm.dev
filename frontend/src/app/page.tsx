@@ -53,7 +53,7 @@ export default function LandingPage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
                 <Scissors className="h-4 w-4 text-white" />
               </div>
-              <span className="inline-block font-bold text-xl text-white">clipfarm.ai</span>
+              <span className="inline-block font-bold text-xl text-white">clipfarm.dev</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link
@@ -142,7 +142,7 @@ export default function LandingPage() {
                   src="/cat-space.gif?height=550&width=550"
                   width={550}
                   height={550}
-                  alt="ClipFarm.ai Dashboard"
+                  alt="ClipFarm.dev Dashboard"
                   className="relative mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center shadow-2xl sm:w-full lg:order-last"
                 />
               </div>
@@ -227,7 +227,7 @@ export default function LandingPage() {
                     For Casuals
                   </div>
                   <h3 className="text-2xl font-bold">Hobby</h3>
-                  <p className="text-muted-foreground">Perfect for trying out clipfarm.ai</p>
+                  <p className="text-muted-foreground">Perfect for trying out clipfarm.dev</p>
                 </div>
                 <div className="mt-4 flex items-baseline">
                   <span className="text-3xl font-bold">$0</span>
@@ -304,7 +304,7 @@ export default function LandingPage() {
               <div className="space-y-3 text-gray-500">
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Ready to create viral clips?</h2>
                 <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-                  Join thousands of content creators who are already using clipfarm.ai to grow their audience and
+                  Join thousands of content creators who are already using clipfarm.dev to grow their audience and
                   engagement.
                 </p>
               </div>
@@ -334,7 +334,7 @@ export default function LandingPage() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
                   <Scissors className="h-4 w-4 text-white" />
                 </div>
-                <span className="font-bold text-xl">clipfarm.ai</span>
+                <span className="font-bold text-xl">clipfarm.dev</span>
               </div>
               <p className="text-sm max-w-xs text-muted-foreground">
                 Create viral clips in seconds with AI-powered video editing and optimization.
@@ -379,7 +379,7 @@ export default function LandingPage() {
           </div>
           <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} clipfarm.ai. All rights reserved.
+              &copy; {new Date().getFullYear()} clipfarm.dev. All rights reserved.
             </p>
             <div className="flex gap-4">
               <Link

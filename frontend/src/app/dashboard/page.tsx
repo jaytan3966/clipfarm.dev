@@ -112,7 +112,7 @@ function AppSidebar() {
             <Scissors className="h-4 w-4 text-white" />
           </div>
           <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" onClick={(() => router.push("/"))}>
-            clipfarm.ai
+            clipfarm.dev
           </span>
         </div>
       </SidebarHeader>
@@ -414,7 +414,7 @@ export default function Dashboard() {
                       src="/cat-space.gif"
                       width={750}
                       height={750}
-                      alt="ClipFarm.ai Dashboard"
+                      alt="ClipFarm.dev Dashboard"
                       className="block w-full h-auto aspect-video rounded-t-xl object-cover object-center shadow-2xl"
                     />
                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-medium">
