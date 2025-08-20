@@ -183,7 +183,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground hover:cursor-pointer"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -192,7 +192,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
           >
             {isSignUp ? "Create Account" : "Sign In"}
           </Button>
@@ -237,7 +237,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               <button
                 type="button"
                 onClick={() => setIsSignUp(false)}
-                className="text-purple-600 hover:text-purple-500 font-medium"
+                className="text-purple-600 hover:text-purple-500 font-medium hover:cursor-pointer"
               >
                 Sign in
               </button>
@@ -248,27 +248,13 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               <button
                 type="button"
                 onClick={() => setIsSignUp(true)}
-                className="text-purple-600 hover:text-purple-500 font-medium"
+                className="text-purple-600 hover:text-purple-500 font-medium hover:cursor-pointer"
               >
                 Sign up
               </button>
             </p>
           )}
         </div>
-
-        {isSignUp && (
-          <p className="text-xs text-muted-foreground text-center">
-            By creating an account, you agree to our{" "}
-            <a href="#" className="text-purple-600 hover:text-purple-500">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-purple-600 hover:text-purple-500">
-              Privacy Policy
-            </a>
-            .
-          </p>
-        )}
       </DialogContent>
     </Dialog>
   )

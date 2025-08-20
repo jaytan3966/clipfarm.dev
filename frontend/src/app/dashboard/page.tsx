@@ -105,13 +105,13 @@ function AppSidebar() {
   ]
 
   return (
-    <Sidebar className="border-r border-purple-200 bg-white shadow-sm">
+    <Sidebar className="border-r border-purple-200 bg-white shadow-sm hover:cursor-pointer">
       <SidebarHeader className="border-b border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
         <div className="flex items-center space-x-2 px-4 py-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
             <Scissors className="h-4 w-4 text-white" />
           </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" onClick={(() => router.push("/"))}>
             clipfarm.ai
           </span>
         </div>
@@ -126,7 +126,7 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 duration-500">
+              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
                 <div className="flex items-center space-x-2">
                   <Video className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Past Clips</span>
@@ -141,7 +141,7 @@ function AppSidebar() {
                 <SidebarMenu>
                   {pastClipsItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton className="flex items-center justify-between hover:bg-purple-50 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500">
+                      <SidebarMenuButton className="flex items-center justify-between hover:bg-purple-50 hover:cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500">
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4 text-gray-500" />
                           <span className="text-sm">{item.title}</span>
@@ -169,7 +169,7 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 duration-500">
+              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
                 <div className="flex items-center space-x-2">
                   <Coins className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Tokens & Payments</span>
@@ -185,7 +185,7 @@ function AppSidebar() {
                   {tokenItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`hover:bg-purple-50 px-3 py-2 rounded-md duration-500 ${item.action ? "text-purple-600 hover:text-purple-700" : "text-gray-700 hover:text-gray-900"}`}
+                        className={`hover:bg-purple-50 px-3 py-2 rounded-md hover:cursor-pointer duration-500 ${item.action ? "text-purple-600 hover:text-purple-700" : "text-gray-700 hover:text-gray-900"}`}
                       >
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4" />
@@ -211,7 +211,7 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 duration-500">
+              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
                 <div className="flex items-center space-x-2">
                   <Sparkles className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Generate Clips</span>
@@ -226,7 +226,7 @@ function AppSidebar() {
                 <SidebarMenu>
                   {generateItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton className="hover:bg-purple-50 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500">
+                      <SidebarMenuButton className="hover:bg-purple-50 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:cursor-pointer duration-500">
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4 text-gray-500" />
                           <div className="flex flex-col">
@@ -254,26 +254,26 @@ function AppSidebar() {
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
                     <AvatarFallback className="bg-purple-500 text-white text-xs">JD</AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col text-left">
+                  <div className="flex flex-col text-left hover:cursor-pointer">
                     <span className="text-sm font-medium text-gray-900">John Doe</span>
                     <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-56 text-gray-900">
-                <DropdownMenuItem className="hover:bg-purple-50 duration-500">
+                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500">
                   <CircleUser className="mr-2 h-4 w-4"/>
                   My Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-purple-50 duration-500">
+                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500">
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-purple-50 duration-500">
+                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500">
                   <CreditCard className="mr-2 h-4 w-4" />
                   Billing
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => logout()} className="hover:bg-purple-50 duration-500">
+                <DropdownMenuItem onClick={() => logout()} className="hover:bg-purple-50 hover:cursor-pointer duration-500">
                   <LogOut className="mr-2 h-4 w-4" />
                   Log Out
                 </DropdownMenuItem>
@@ -366,7 +366,7 @@ export default function Dashboard() {
         <SidebarInset className="flex-1">
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center gap-2 border-b border-purple-200 bg-white/90 backdrop-blur-sm px-6 shadow-sm">
-            <SidebarTrigger className="-ml-1 text-gray-500" />
+            <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-900 hover:cursor-pointer" />
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
