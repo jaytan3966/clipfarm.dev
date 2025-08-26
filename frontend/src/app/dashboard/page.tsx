@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAuth } from "@/context/authContext"
 import {
   Sidebar,
   SidebarContent,
@@ -28,8 +29,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -55,7 +54,8 @@ import {
   Filter,
   Trash,
   LogOut,
-  CircleUser
+  CircleUser,
+  MoonStar
 } from "lucide-react"
 
 function AppSidebar() {
@@ -342,20 +342,16 @@ export default function Dashboard() {
   ]
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true)
+  const session = useAuth();
 
   useEffect(() => {
-    const verifyUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        router.push("/");
-      } else {
-        setIsLoading(false);
-      }
-    };
-
-    verifyUser();
-  })
+    if (session === null){
+      router.push("/");
+    } else {
+      setIsLoading(false);
+      console.log(session);
+    }
+  }, [session, router])
 
   if (isLoading) return null;
 
@@ -366,18 +362,18 @@ export default function Dashboard() {
         <SidebarInset className="flex-1">
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center gap-2 border-b border-purple-200 bg-white/90 backdrop-blur-sm px-6 shadow-sm">
-            <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-900 hover:cursor-pointer" />
+            <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-600 hover:text-gray-900 hover:cursor-pointer duration-500" />
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
                 <p className="text-sm text-gray-600">Manage your clips and generate new content</p>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
                   <Bell className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
-                  <Filter className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
+                  <MoonStar className="h-4 w-4" />
                 </Button>
               </div>
             </div>
