@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/authContext"
+import { useUserProfile } from "@/context/userProfileContext"
 import {
   Sidebar,
   SidebarContent,
@@ -82,6 +83,8 @@ function AppSidebar() {
       router.push('/')
     }
   }
+
+  const user = useUserProfile();
 
   const pastClipsItems = [
     { title: "All Clips", count: 127, icon: Video },
@@ -252,10 +255,12 @@ function AppSidebar() {
                 <SidebarMenuButton className="w-full hover:bg-purple-100 px-3 py-2 rounded-lg">
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
-                    <AvatarFallback className="bg-purple-500 text-white text-xs">JD</AvatarFallback>
+                    <AvatarFallback className="bg-purple-500 text-white text-xs">{user ? user.username[0].toUpperCase() : "0"}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
-                    <span className="text-sm font-medium text-gray-900">John Doe</span>
+                    <span className="text-sm font-medium text-gray-900">{
+                    user ? user.username :  
+                    "null"}</span>
                     <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
                   </div>
                 </SidebarMenuButton>
