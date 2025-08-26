@@ -77,38 +77,31 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         }),
       });
       if (!response.ok) {
-        const insertError = await response.json()
-        console.error("Insert error:", insertError);
-        setError(`Signup succeeded but user creation failed: ${insertError}`);
+        setError(`User insertion error: user already exists.`);
+        return;
       } 
     }
-    router.push("/dashboard");
     onOpenChange(false);
   }
 
   const handleGitHubSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
-      options: {
-      redirectTo: `${window.location.origin}/dashboard`
-    }
     });
     if (error) {
       setError("Github sign-in failed. Try again.")
     }
+    onOpenChange(false);
   };
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-      redirectTo: `${window.location.origin}/dashboard`
-    }
     });
     if (error) {
       setError("Google sign-in failed. Try again.")
     }
+    onOpenChange(false);
   };
-  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -224,7 +217,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             {isSignUp ? <AlertTitle className="font-medium text-white">SIGN UP ERROR!</AlertTitle> : 
             <AlertTitle className="font-medium text-white">LOGIN ERROR!</AlertTitle>
             }
-            <AlertDescription className="text-sm text-white mt-1">{error}!</AlertDescription>
+            <AlertDescription className="text-sm text-white mt-1">{error}</AlertDescription>
           </Alert>
         :
         <div></div>}
