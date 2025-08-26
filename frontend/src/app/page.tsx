@@ -6,7 +6,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { AuthModal } from "@/components/login/auth-modal"
-import { supabase } from "@/lib/supabaseClient"
 import {
   CheckCircle,
   ChevronRight,
@@ -22,26 +21,21 @@ import {
   Instagram,
   Mail,
 } from "lucide-react"
+import { useAuth } from "@/context/authContext"
 
 
 export default function LandingPage() {
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const router = useRouter();
 
-  const checkUser = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session){
-      router.push("/dashboard");
-    } else {
-      router.push("/");
-    }
-  };
+  const session = useAuth();
   
   const handleGetStarted = () => {
-    checkUser();
-    setTimeout(() => {
+    if (!session){
       setAuthModalOpen(true);
-    }, 200);
+    } else {
+      router.push("/dashboard")
+    }
   }
 
   return (
