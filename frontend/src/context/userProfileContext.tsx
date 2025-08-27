@@ -16,7 +16,6 @@ export function UserProfileProvider({children} : React.PropsWithChildren){
 
     useEffect(() => {
         if (session?.user){
-            console.log(session.user.id);
             const fetchProfile = async () => {
                 const {data, error} = await supabase
                 .from("profiles")

@@ -18,6 +18,10 @@ export function AuthProvider({children} : React.PropsWithChildren){
             if (event === "SIGNED_IN") {
                 router.push("/dashboard");
             }
+            if (event === "SIGNED_OUT") {
+                console.log("Signed out")
+                router.push("/");
+            }
             setSession(session);
         });
 

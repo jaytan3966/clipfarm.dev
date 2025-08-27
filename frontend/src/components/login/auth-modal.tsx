@@ -56,7 +56,6 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         : await supabase.auth.signInWithPassword({ email, password })
          
     if (authError) {
-      console.log("Error : ", authError.message)
       setError(authError.message);
       return;
     }
