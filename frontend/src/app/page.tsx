@@ -34,7 +34,7 @@ export default function LandingPage() {
     if (!session){
       setAuthModalOpen(true);
     } else {
-      router.push("/dashboard")
+      router.push("/pages/dashboard")
     }
   }
 

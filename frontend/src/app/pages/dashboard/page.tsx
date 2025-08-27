@@ -1,14 +1,12 @@
 "use client"
 
-import type React from "react"
-
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/authContext"
 import { useUserProfile } from "@/context/userProfileContext"
@@ -28,11 +26,24 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Plus,
+  Play,
+  Download,
+  MoreHorizontal,
+  Clock,
+  CheckCircle,
+  AlertCircle,
   Video,
   Scissors,
+  Eye,
+  Share2,
   Settings,
   Bell,
   ChevronDown,
@@ -41,23 +52,15 @@ import {
   History,
   Sparkles,
   Calendar,
+  Trash,
   LogOut,
   CircleUser,
-  MoonStar,
-  CheckCircle,
-  AlertCircle,
-  Clock,
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  Save,
-  Camera,
+  MoonStar
 } from "lucide-react"
 
 function AppSidebar() {
-  const router = useRouter()
+
+  const router = useRouter();
   const [openSections, setOpenSections] = useState({
     pastClips: true,
     tokens: false,
@@ -80,7 +83,7 @@ function AppSidebar() {
     }
   }
 
-  const user = useUserProfile()
+  const user = useUserProfile();
 
   const pastClipsItems = [
     { title: "All Clips", count: 127, icon: Video },
@@ -110,10 +113,7 @@ function AppSidebar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
             <Scissors className="h-4 w-4 text-white" />
           </div>
-          <span
-            className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent cursor-pointer"
-            onClick={() => router.push("/dashboard")}
-          >
+          <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" onClick={(() => router.push("/"))}>
             clipfarm.dev
           </span>
         </div>
@@ -143,14 +143,17 @@ function AppSidebar() {
                 <SidebarMenu>
                   {pastClipsItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        className="flex items-center justify-between hover:bg-purple-50 hover:cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500"
-                        onClick={() => router.push("/dashboard")}
-                      >
+                      <SidebarMenuButton className="flex items-center justify-between hover:bg-purple-50 hover:cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500">
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4 text-gray-500" />
                           <span className="text-sm">{item.title}</span>
                         </div>
+                        <Badge
+                          variant="secondary"
+                          className="text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 duration-500"
+                        >
+                          {item.count}
+                        </Badge>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -251,32 +254,26 @@ function AppSidebar() {
                 <SidebarMenuButton className="w-full hover:bg-purple-100 px-3 py-2 rounded-lg">
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
-                    <AvatarFallback className="bg-purple-500 text-white text-xs">
-                      {user ? user.username[0].toUpperCase() : "0"}
-                    </AvatarFallback>
+                    <AvatarFallback className="bg-purple-500 text-white text-xs">{user ? user.username[0].toUpperCase() : "0"}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
-                    <span className="text-sm font-medium text-gray-900">{user ? user.username : "null"}</span>
+                    <span className="text-sm font-medium text-gray-900">{
+                    user ? user.username :  
+                    "null"}</span>
                     <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-56 text-gray-900">
-                <DropdownMenuItem
-                  className="hover:bg-purple-50 hover:cursor-pointer duration-500 bg-purple-100"
-                  onClick={() => router.push("/account")}
-                >
-                  <CircleUser className="mr-2 h-4 w-4" />
+                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500" onClick={() => router.push("/pages/account")}>
+                  <CircleUser className="mr-2 h-4 w-4"/>
                   My Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500">
+                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500" onClick={() => router.push("/pages/billing")}>
                   <CreditCard className="mr-2 h-4 w-4" />
                   Billing
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => logout()}
-                  className="hover:bg-purple-50 hover:cursor-pointer duration-500"
-                >
+                <DropdownMenuItem onClick={() => logout()} className="hover:bg-purple-50 hover:cursor-pointer duration-500">
                   <LogOut className="mr-2 h-4 w-4" />
                   Log Out
                 </DropdownMenuItem>
@@ -289,85 +286,73 @@ function AppSidebar() {
   )
 }
 
-export default function AccountPage() {
-  const router = useRouter()
+export default function Dashboard() {
+  // Mock data for past clips
+  const pastClips = [
+    {
+      id: 1,
+      title: "Marketing Webinar Highlights",
+      thumbnail: "/placeholder.svg?height=160&width=240",
+      duration: "0:45",
+      status: "completed",
+      views: 1234,
+      created: "2 hours ago",
+      platform: "YouTube Shorts",
+    },
+    {
+      id: 2,
+      title: "Product Demo Key Moments",
+      thumbnail: "/placeholder.svg?height=160&width=240",
+      duration: "1:20",
+      status: "processing",
+      views: 0,
+      created: "5 hours ago",
+      platform: "TikTok",
+    },
+    {
+      id: 3,
+      title: "Interview Best Parts",
+      thumbnail: "/placeholder.svg?height=160&width=240",
+      duration: "0:58",
+      status: "completed",
+      views: 856,
+      created: "1 day ago",
+      platform: "Instagram Reels",
+    },
+    {
+      id: 4,
+      title: "Tutorial Highlights",
+      thumbnail: "/placeholder.svg?height=160&width=240",
+      duration: "1:15",
+      status: "failed",
+      views: 0,
+      created: "2 days ago",
+      platform: "YouTube Shorts",
+    },
+    {
+      id: 5,
+      title: "Podcast Best Moments",
+      thumbnail: "/placeholder.svg?height=160&width=240",
+      duration: "2:10",
+      status: "completed",
+      views: 2341,
+      created: "3 days ago",
+      platform: "TikTok",
+    },
+  ]
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true)
-  const [isSaving, setIsSaving] = useState(false)
-  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null)
-
-  const session = useAuth()
-  const user = useUserProfile()
-
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  })
+  const session = useAuth();
 
   useEffect(() => {
-    if (session === null) {
-      router.push("/")
+    if (session === null){
+      router.push("/");
     } else {
-      setIsLoading(false)
-      if (user) {
-        setFormData((prev) => ({
-          ...prev,
-          username: user.username || "",
-          email: user.email || "",
-        }))
-      }
+      setIsLoading(false);
     }
-  }, [session, router, user])
+  }, [session, router])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSaveProfile = async () => {
-    setIsSaving(true)
-    setAlert(null)
-
-    try {
-      const response = await fetch("/api/accountInfo", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${session?.access_token}`
-        },
-        body: JSON.stringify({
-          username: formData.username !== user?.username ? formData.username : undefined,
-          email: formData.email !== user?.email ? formData.email : undefined,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to update profile")
-      }
-
-      // Clear password fields on success
-      if (formData.newPassword) {
-        setFormData((prev) => ({
-          ...prev,
-          currentPassword: "",
-        }))
-      }
-
-      setAlert({ type: "success", message: data.message })
-    } catch  {
-      setAlert({ type: "error", message: "Failed to update profile" })
-    } finally {
-      setIsSaving(false)
-    }
-  }
-
-  if (isLoading) return null
+  if (isLoading) return null;
 
   return (
     <SidebarProvider>
@@ -379,8 +364,8 @@ export default function AccountPage() {
             <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-600 hover:text-gray-900 hover:cursor-pointer duration-500" />
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">My Account</h1>
-                <p className="text-sm text-gray-600">Manage your profile and account settings</p>
+                <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+                <p className="text-sm text-gray-600">Manage your clips and generate new content</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
@@ -395,112 +380,106 @@ export default function AccountPage() {
 
           {/* Main Content */}
           <main className="flex-1 p-6">
-            <div className="max-w-2xl mx-auto space-y-6">
-              {/* Alert */}
-              {alert && (
-                <Alert
-                  className={`${alert.type === "success" ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200" : "bg-gradient-to-r from-red-50 to-pink-50 border-red-300"}`}
-                >
-                  <AlertDescription className={`${alert.type === "success" ? "text-green-700" : "text-red-700"}`}>
-                    {alert.message}
-                  </AlertDescription>
-                </Alert>
-              )}
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2 text-gray-900">Your Clips</h2>
+              <p className="text-gray-600">Create new clips or manage your existing ones</p>
+            </div>
 
-              {/* Profile Picture Card */}
-              <Card className="bg-white shadow-sm border border-gray-200">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 flex items-center space-x-2">
-                    <User className="h-5 w-5 text-purple-600" />
-                    <span>Profile Picture</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center space-x-4">
-                    <Avatar className="h-20 w-20">
-                      <AvatarImage src="/placeholder.svg?height=80&width=80" />
-                      <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-2xl">
-                        {user ? user.username[0].toUpperCase() : "U"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <Button variant="outline" className="hover:bg-purple-50 border-purple-200 bg-transparent text-gray-900">
-                        <Camera className="h-4 w-4 mr-2" />
-                        Change Photo
-                      </Button>
-                      <p className="text-sm text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB.</p>
-                    </div>
+            {/* Clips Grid */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {/* Create New Clip Card */}
+              <Card className="border-2 border-dashed border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50 hover:border-purple-400 hover:shadow-md transition-all cursor-pointer group">
+                <CardContent className="flex flex-col items-center justify-center h-64 text-center p-6">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                    <Plus className="h-8 w-8 text-white" />
                   </div>
+                  <h3 className="font-semibold text-lg mb-2 text-gray-900">Create New Clip</h3>
+                  <p className="text-sm text-gray-600">Upload a video and let AI create engaging clips</p>
                 </CardContent>
               </Card>
 
-              {/* Personal Information Card */}
-              <Card className="bg-white shadow-sm border border-gray-200">
-                <CardHeader>
-                  <CardTitle className="text-gray-900 flex items-center space-x-2">
-                    <CircleUser className="h-5 w-5 text-purple-600" />
-                    <span>Personal Information</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="username" className="text-gray-700">
-                      Username
-                    </Label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-900" />
-                      <Input
-                        id="username"
-                        name="username"
-                        type="text"
-                        value={formData.username}
-                        onChange={handleInputChange}
-                        className="pl-10 border-gray-300 focus:border-purple-500 focus:ring-purple-500 text-gray-900"
-                        placeholder="Enter your username"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-gray-700">
-                      Email Address
-                    </Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-900" />
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="pl-10 border-gray-300 focus:border-purple-500 focus:ring-purple-500 text-gray-900"
-                        placeholder="Enter your email address"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Save Button */}
-              <div className="flex justify-end">
-                <Button
-                  onClick={handleSaveProfile}
-                  disabled={isSaving}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8"
+              {/* Past Clips */}
+              {pastClips.map((clip) => (
+                <Card
+                  key={clip.id}
+                  className="overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow border border-gray-200 pt-0"
                 >
-                  {isSaving ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4 mr-2" />
-                      Save Changes
-                    </>
-                  )}
-                </Button>
-              </div>
+                  <div className="relative">
+                    <Image
+                      src="/cat-space.gif"
+                      width={750}
+                      height={750}
+                      alt="ClipFarm.dev Dashboard"
+                      className="block w-full h-auto aspect-video rounded-t-xl object-cover object-center shadow-2xl"
+                    />
+                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded font-medium">
+                      {clip.duration}
+                    </div>
+                    <div className="absolute top-2 left-2">
+                      {clip.status === "completed" && (
+                        <Badge className="bg-green-500 hover:bg-green-600 text-white">
+                          <CheckCircle className="mr-1 h-3 w-3" />
+                          Done
+                        </Badge>
+                      )}
+                      {clip.status === "processing" && (
+                        <Badge className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                          <Clock className="mr-1 h-3 w-3" />
+                          Processing
+                        </Badge>
+                      )}
+                      {clip.status === "failed" && (
+                        <Badge className="bg-red-500 hover:bg-red-600 text-white">
+                          <AlertCircle className="mr-1 h-3 w-3" />
+                          Failed
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="absolute top-2 right-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm duration-500"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="bg-black/60 text-white backdrop-blur-sm">
+                          <DropdownMenuItem>
+                            <Play className="mr-2 h-4 w-4" />
+                            Preview
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Download className="mr-2 h-4 w-4" />
+                            Download
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Share2 className="mr-2 h-4 w-4" />
+                            Share
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
+                  <CardContent>
+                    <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-900">{clip.title}</h3>
+                    <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                      <span className="font-medium">{clip.platform}</span>
+                      <span>{clip.created}</span>
+                    </div>
+                    <div className="flex items-center space-x-1 text-xs text-gray-500">
+                      <Eye className="h-3 w-3" />
+                      <span className="font-medium">{clip.views.toLocaleString()} views</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </main>
         </SidebarInset>
