@@ -418,7 +418,7 @@ export default function AccountPage() {
       }
 
       setAlert({ type: "success", message: data.message })
-    } catch (error) {
+    } catch  {
       setAlert({ type: "error", message: "Failed to update profile" })
     } finally {
       setIsSaving(false)
