@@ -230,7 +230,7 @@ export default function LandingPage() {
                 <ul className="mt-6 space-y-2">
                   <li className="flex items-center">
                     <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
-                    <span>10 clips per month</span>
+                    <span>5 clips per month</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="mr-2 h-4 w-4 text-green-500" />

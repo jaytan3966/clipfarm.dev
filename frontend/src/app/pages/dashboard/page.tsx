@@ -1,7 +1,9 @@
 "use client"
 
+import { useState } from "react"
+
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { supabase } from "@/lib/supabaseClient"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -10,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/authContext"
 import { useUserProfile } from "@/context/userProfileContext"
+import { useDarkMode } from "@/context/darkModeContext"
 import {
   Sidebar,
   SidebarContent,
@@ -26,12 +29,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
   Plus,
   Play,
@@ -55,12 +53,12 @@ import {
   Trash,
   LogOut,
   CircleUser,
-  MoonStar
+  MoonStar,
+  Sun,
 } from "lucide-react"
 
-function AppSidebar() {
-
-  const router = useRouter();
+function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
+  const router = useRouter()
   const [openSections, setOpenSections] = useState({
     pastClips: true,
     tokens: false,
@@ -83,7 +81,7 @@ function AppSidebar() {
     }
   }
 
-  const user = useUserProfile();
+  const user = useUserProfile()
 
   const pastClipsItems = [
     { title: "All Clips", count: 127, icon: Video },
@@ -107,13 +105,26 @@ function AppSidebar() {
   ]
 
   return (
-    <Sidebar className="border-r border-purple-200 bg-white shadow-sm hover:cursor-pointer">
-      <SidebarHeader className="border-b border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+    <Sidebar
+      className={`border-r shadow-sm hover:cursor-pointer transition-all duration-300 ${
+        isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
+      }`}
+    >
+      <SidebarHeader
+        className={`border-b transition-all duration-300 ${
+          isDarkMode
+            ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
+            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        }`}
+      >
         <div className="flex items-center space-x-2 px-4 py-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
             <Scissors className="h-4 w-4 text-white" />
           </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" onClick={(() => router.push("/"))}>
+          <span
+            className={`text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:cursor-pointer`}
+            onClick={() => router.push("/")}
+          >
             clipfarm.dev
           </span>
         </div>
@@ -128,13 +139,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Video className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Past Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.pastClips ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-all duration-300 ${
+                    openSections.pastClips ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -143,14 +160,26 @@ function AppSidebar() {
                 <SidebarMenu>
                   {pastClipsItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton className="flex items-center justify-between hover:bg-purple-50 hover:cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500">
+                      <SidebarMenuButton
+                        className={`flex items-center justify-between hover:cursor-pointer px-3 py-2 rounded-md transition-all duration-300 ${
+                          isDarkMode
+                            ? "hover:bg-gray-800 text-gray-300 hover:text-gray-100"
+                            : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
+                        }`}
+                      >
                         <div className="flex items-center space-x-2">
-                          <item.icon className="h-4 w-4 text-gray-500" />
+                          <item.icon
+                            className={`h-4 w-4 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                          />
                           <span className="text-sm">{item.title}</span>
                         </div>
                         <Badge
                           variant="secondary"
-                          className="text-xs bg-purple-100 text-purple-700 hover:bg-purple-200 duration-500"
+                          className={`text-xs transition-all duration-300 ${
+                            isDarkMode
+                              ? "bg-gray-700 text-purple-300 hover:bg-gray-600"
+                              : "bg-purple-100 text-purple-700 hover:bg-purple-200"
+                          }`}
                         >
                           {item.count}
                         </Badge>
@@ -171,13 +200,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Coins className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Tokens & Payments</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.tokens ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-all duration-300 ${
+                    openSections.tokens ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -187,13 +222,27 @@ function AppSidebar() {
                   {tokenItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`hover:bg-purple-50 px-3 py-2 rounded-md hover:cursor-pointer duration-500 ${item.action ? "text-purple-600 hover:text-purple-700" : "text-gray-700 hover:text-gray-900"}`}
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-300 ${
+                          item.action
+                            ? isDarkMode
+                              ? "text-purple-400 hover:text-purple-300 hover:bg-gray-800"
+                              : "text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                            : isDarkMode
+                              ? "text-gray-300 hover:text-gray-100 hover:bg-gray-800"
+                              : "text-gray-700 hover:text-gray-900 hover:bg-purple-50"
+                        }`}
                       >
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4" />
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{item.title}</span>
-                            {item.value && <span className="text-xs text-gray-500">{item.value}</span>}
+                            {item.value && (
+                              <span
+                                className={`text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                              >
+                                {item.value}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </SidebarMenuButton>
@@ -213,13 +262,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Sparkles className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Generate Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.generate ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-all duration-300 ${
+                    openSections.generate ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -228,12 +283,24 @@ function AppSidebar() {
                 <SidebarMenu>
                   {generateItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton className="hover:bg-purple-50 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:cursor-pointer duration-500">
+                      <SidebarMenuButton
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-300 ${
+                          isDarkMode
+                            ? "hover:bg-gray-800 text-gray-300 hover:text-gray-100"
+                            : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
+                        }`}
+                      >
                         <div className="flex items-center space-x-2">
-                          <item.icon className="h-4 w-4 text-gray-500" />
+                          <item.icon
+                            className={`h-4 w-4 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                          />
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{item.title}</span>
-                            <span className="text-xs text-gray-500">{item.description}</span>
+                            <span
+                              className={`text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                            >
+                              {item.description}
+                            </span>
                           </div>
                         </div>
                       </SidebarMenuButton>
@@ -246,34 +313,64 @@ function AppSidebar() {
         </Collapsible>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+      <SidebarFooter
+        className={`border-t transition-all duration-300 ${
+          isDarkMode
+            ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
+            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        }`}
+      >
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className="w-full hover:bg-purple-100 px-3 py-2 rounded-lg">
+                <SidebarMenuButton
+                  className={`w-full px-3 py-2 rounded-lg transition-all duration-300 ${isDarkMode ? "hover:bg-gray-800" : "hover:bg-purple-100"}`}
+                >
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
-                    <AvatarFallback className="bg-purple-500 text-white text-xs">{user ? user.username[0].toUpperCase() : "0"}</AvatarFallback>
+                    <AvatarFallback className="bg-purple-500 text-white text-xs">
+                      {user ? user.username[0].toUpperCase() : "0"}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
-                    <span className="text-sm font-medium text-gray-900">{
-                    user ? user.username :  
-                    "null"}</span>
+                    <span
+                      className={`text-sm font-medium transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                    >
+                      {user ? user.username : "null"}
+                    </span>
                     <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" className="w-56 text-gray-900">
-                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500" onClick={() => router.push("/pages/account")}>
-                  <CircleUser className="mr-2 h-4 w-4"/>
+              <DropdownMenuContent
+                side="top"
+                className={`w-56 transition-all duration-300 ${isDarkMode ? "bg-gray-800 text-gray-100" : "text-gray-900"}`}
+              >
+                <DropdownMenuItem
+                  className={`hover:cursor-pointer transition-all duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
+                  }`}
+                  onClick={() => router.push("/pages/account")}
+                >
+                  <CircleUser className="mr-2 h-4 w-4" />
                   My Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500" onClick={() => router.push("/pages/billing")}>
+                <DropdownMenuItem
+                  className={`hover:cursor-pointer transition-all duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
+                  }`}
+                  onClick={() => router.push("/pages/billing")}
+                >
                   <CreditCard className="mr-2 h-4 w-4" />
                   Billing
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => logout()} className="hover:bg-purple-50 hover:cursor-pointer duration-500">
+                <DropdownMenuItem
+                  onClick={() => logout()}
+                  className={`hover:cursor-pointer transition-all duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
+                  }`}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Log Out
                 </DropdownMenuItem>
@@ -287,6 +384,8 @@ function AppSidebar() {
 }
 
 export default function Dashboard() {
+  const { isDarkMode, toggleDarkMode } = useDarkMode()
+
   // Mock data for past clips
   const pastClips = [
     {
@@ -340,61 +439,120 @@ export default function Dashboard() {
       platform: "TikTok",
     },
   ]
-  const router = useRouter();
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
-  const session = useAuth();
+  const session = useAuth()
 
   useEffect(() => {
-    if (session === null){
-      router.push("/");
+    if (session === null) {
+      router.push("/")
     } else {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }, [session, router])
 
-  if (isLoading) return null;
+  if (isLoading) return null
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-gradient-to-br from-purple-50 via-white to-pink-50">
-        <AppSidebar />
+      <div
+        className={`flex min-h-screen w-full transition-all duration-300 ${
+          isDarkMode
+            ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+            : "bg-gradient-to-br from-purple-50 via-white to-pink-50"
+        }`}
+      >
+        <AppSidebar isDarkMode={isDarkMode} />
         <SidebarInset className="flex-1">
           {/* Header */}
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b border-purple-200 bg-white/90 backdrop-blur-sm px-6 shadow-sm">
-            <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-600 hover:text-gray-900 hover:cursor-pointer duration-500" />
+          <header
+            className={`flex h-16 shrink-0 items-center gap-2 border-b px-6 shadow-sm transition-all duration-300 ${
+              isDarkMode
+                ? "border-gray-700 bg-gray-900/90 backdrop-blur-sm"
+                : "border-purple-200 bg-white/90 backdrop-blur-sm"
+            }`}
+          >
+            <SidebarTrigger
+              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-all duration-300 ${
+                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+              }`}
+            />
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
-                <p className="text-sm text-gray-600">Manage your clips and generate new content</p>
+                <h1
+                  className={`text-xl font-semibold transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                >
+                  Dashboard
+                </h1>
+                <p
+                  className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                >
+                  Manage your clips and generate new content
+                </p>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`transition-all duration-300 ${
+                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
                   <Bell className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
-                  <MoonStar className="h-4 w-4" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`transition-all duration-300 ${
+                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  onClick={toggleDarkMode}
+                >
+                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
                 </Button>
               </div>
             </div>
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 p-6">
+          <main
+            className={`flex-1 p-6 transition-all duration-300 ${isDarkMode ? "bg-gray-900/50" : "bg-transparent"}`}
+          >
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-gray-900">Your Clips</h2>
-              <p className="text-gray-600">Create new clips or manage your existing ones</p>
+              <h2
+                className={`text-2xl font-bold mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+              >
+                Your Clips
+              </h2>
+              <p className={`transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                Create new clips or manage your existing ones
+              </p>
             </div>
 
             {/* Clips Grid */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {/* Create New Clip Card */}
-              <Card className="border-2 border-dashed border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50 hover:border-purple-400 hover:shadow-md transition-all cursor-pointer group">
+              <Card
+                className={`border-2 border-dashed hover:shadow-md transition-all duration-300 cursor-pointer group ${
+                  isDarkMode
+                    ? "border-gray-600 bg-gradient-to-br from-gray-800 to-gray-900 hover:border-gray-500 hover:shadow-gray-900/50"
+                    : "border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50 hover:border-purple-400"
+                }`}
+              >
                 <CardContent className="flex flex-col items-center justify-center h-64 text-center p-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <Plus className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-lg mb-2 text-gray-900">Create New Clip</h3>
-                  <p className="text-sm text-gray-600">Upload a video and let AI create engaging clips</p>
+                  <h3
+                    className={`font-semibold text-lg mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                  >
+                    Create New Clip
+                  </h3>
+                  <p
+                    className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                  >
+                    Upload a video and let AI create engaging clips
+                  </p>
                 </CardContent>
               </Card>
 
@@ -402,7 +560,9 @@ export default function Dashboard() {
               {pastClips.map((clip) => (
                 <Card
                   key={clip.id}
-                  className="overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow border border-gray-200 pt-0"
+                  className={`overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border pt-0 ${
+                    isDarkMode ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50" : "bg-white border-gray-200"
+                  }`}
                 >
                   <div className="relative">
                     <Image
@@ -441,7 +601,7 @@ export default function Dashboard() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm duration-500"
+                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm transition-all duration-300"
                           >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
@@ -467,13 +627,21 @@ export default function Dashboard() {
                       </DropdownMenu>
                     </div>
                   </div>
-                  <CardContent>
-                    <h3 className="font-semibold text-sm mb-2 line-clamp-2 text-gray-900">{clip.title}</h3>
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                  <CardContent className={`transition-all duration-300 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+                    <h3
+                      className={`font-semibold text-sm mb-2 line-clamp-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                    >
+                      {clip.title}
+                    </h3>
+                    <div
+                      className={`flex items-center justify-between text-xs mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                    >
                       <span className="font-medium">{clip.platform}</span>
                       <span>{clip.created}</span>
                     </div>
-                    <div className="flex items-center space-x-1 text-xs text-gray-500">
+                    <div
+                      className={`flex items-center space-x-1 text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                    >
                       <Eye className="h-3 w-3" />
                       <span className="font-medium">{clip.views.toLocaleString()} views</span>
                     </div>

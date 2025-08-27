@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/context/authContext"
 import { useUserProfile } from "@/context/userProfileContext"
+import { useDarkMode } from "@/context/darkModeContext"
 import {
   Sidebar,
   SidebarContent,
@@ -44,19 +45,17 @@ import {
   LogOut,
   CircleUser,
   MoonStar,
+  Sun,
   CheckCircle,
   AlertCircle,
   Clock,
   User,
   Mail,
-  Lock,
-  Eye,
-  EyeOff,
   Save,
   Camera,
 } from "lucide-react"
 
-function AppSidebar() {
+function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
   const router = useRouter()
   const [openSections, setOpenSections] = useState({
     pastClips: true,
@@ -104,8 +103,16 @@ function AppSidebar() {
   ]
 
   return (
-    <Sidebar className="border-r border-purple-200 bg-white shadow-sm hover:cursor-pointer">
-      <SidebarHeader className="border-b border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+    <Sidebar
+      className={`border-r shadow-sm hover:cursor-pointer transition-colors duration-300 ${
+        isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
+      }`}
+    >
+      <SidebarHeader
+        className={`border-b transition-colors duration-300 ${
+          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        }`}
+      >
         <div className="flex items-center space-x-2 px-4 py-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
             <Scissors className="h-4 w-4 text-white" />
@@ -128,13 +135,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Video className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Past Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.pastClips ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    openSections.pastClips ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -144,11 +157,15 @@ function AppSidebar() {
                   {pastClipsItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className="flex items-center justify-between hover:bg-purple-50 hover:cursor-pointer text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md duration-500"
-                        onClick={() => router.push("/dashboard")}
+                        className={`flex items-center justify-between hover:cursor-pointer px-3 py-2 rounded-md transition-colors duration-300 ${
+                          isDarkMode
+                            ? "hover:bg-gray-700 text-gray-300 hover:text-gray-100"
+                            : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
+                        }`}
+                        onClick={() => router.push("/pages/dashboard")}
                       >
                         <div className="flex items-center space-x-2">
-                          <item.icon className="h-4 w-4 text-gray-500" />
+                          <item.icon className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
                           <span className="text-sm">{item.title}</span>
                         </div>
                       </SidebarMenuButton>
@@ -168,13 +185,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Coins className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Tokens & Payments</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.tokens ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    openSections.tokens ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -184,13 +207,25 @@ function AppSidebar() {
                   {tokenItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`hover:bg-purple-50 px-3 py-2 rounded-md hover:cursor-pointer duration-500 ${item.action ? "text-purple-600 hover:text-purple-700" : "text-gray-700 hover:text-gray-900"}`}
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-colors duration-300 ${
+                          item.action
+                            ? isDarkMode
+                              ? "text-purple-400 hover:text-purple-300 hover:bg-gray-700"
+                              : "text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                            : isDarkMode
+                              ? "text-gray-300 hover:text-gray-100 hover:bg-gray-700"
+                              : "text-gray-700 hover:text-gray-900 hover:bg-purple-50"
+                        }`}
                       >
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4" />
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{item.title}</span>
-                            {item.value && <span className="text-xs text-gray-500">{item.value}</span>}
+                            {item.value && (
+                              <span className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                                {item.value}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </SidebarMenuButton>
@@ -210,13 +245,19 @@ function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between hover:bg-purple-50 rounded-lg px-3 py-2 text-gray-900 hover:cursor-pointer duration-500">
+              <CollapsibleTrigger
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <Sparkles className="h-4 w-4 text-purple-600" />
                   <span className="font-semibold text-sm">Generate Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 text-gray-600 transition-transform duration-200 ${openSections.generate ? "rotate-180" : ""}`}
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    openSections.generate ? "rotate-180" : ""
+                  } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -225,12 +266,20 @@ function AppSidebar() {
                 <SidebarMenu>
                   {generateItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton className="hover:bg-purple-50 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:cursor-pointer duration-500">
+                      <SidebarMenuButton
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-colors duration-300 ${
+                          isDarkMode
+                            ? "hover:bg-gray-700 text-gray-300 hover:text-gray-100"
+                            : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
+                        }`}
+                      >
                         <div className="flex items-center space-x-2">
-                          <item.icon className="h-4 w-4 text-gray-500" />
+                          <item.icon className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{item.title}</span>
-                            <span className="text-xs text-gray-500">{item.description}</span>
+                            <span className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                              {item.description}
+                            </span>
                           </div>
                         </div>
                       </SidebarMenuButton>
@@ -243,12 +292,20 @@ function AppSidebar() {
         </Collapsible>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50">
+      <SidebarFooter
+        className={`border-t transition-colors duration-300 ${
+          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        }`}
+      >
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className="w-full hover:bg-purple-100 px-3 py-2 rounded-lg">
+                <SidebarMenuButton
+                  className={`w-full px-3 py-2 rounded-lg transition-colors duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-100"
+                  }`}
+                >
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
                     <AvatarFallback className="bg-purple-500 text-white text-xs">
@@ -256,27 +313,42 @@ function AppSidebar() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
-                    <span className="text-sm font-medium text-gray-900">{user ? user.username : "null"}</span>
+                    <span className={`text-sm font-medium ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}>
+                      {user ? user.username : "null"}
+                    </span>
                     <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" className="w-56 text-gray-900">
+              <DropdownMenuContent
+                side="top"
+                className={`w-56 transition-colors duration-300 ${
+                  isDarkMode ? "bg-gray-800 border-gray-700 text-gray-100" : "text-gray-900"
+                }`}
+              >
                 <DropdownMenuItem
-                  className="hover:bg-purple-50 hover:cursor-pointer duration-500 bg-purple-100"
+                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700 bg-gray-700" : "hover:bg-purple-50 bg-purple-100"
+                  }`}
                   onClick={() => router.push("/pages/account")}
                 >
                   <CircleUser className="mr-2 h-4 w-4" />
                   My Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-purple-50 hover:cursor-pointer duration-500"
-                onClick={() => router.push("/pages/billing")}>
+                <DropdownMenuItem
+                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
+                  }`}
+                  onClick={() => router.push("/pages/billing")}
+                >
                   <CreditCard className="mr-2 h-4 w-4" />
                   Billing
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => logout()}
-                  className="hover:bg-purple-50 hover:cursor-pointer duration-500"
+                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
+                  }`}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   Log Out
@@ -295,6 +367,7 @@ export default function AccountPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null)
+  const { isDarkMode, toggleDarkMode } = useDarkMode()
 
   const session = useAuth()
   const user = useUserProfile()
@@ -306,21 +379,6 @@ export default function AccountPage() {
     newPassword: "",
     confirmPassword: "",
   })
-
-  useEffect(() => {
-    if (session === null) {
-      router.push("/")
-    } else {
-      setIsLoading(false)
-      if (user) {
-        setFormData((prev) => ({
-          ...prev,
-          username: user.username || "",
-          email: user.email || "",
-        }))
-      }
-    }
-  }, [session, router, user])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -338,7 +396,7 @@ export default function AccountPage() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${session?.access_token}`
+          Authorization: `Bearer ${session?.access_token}`,
         },
         body: JSON.stringify({
           username: formData.username !== user?.username ? formData.username : undefined,
@@ -352,7 +410,6 @@ export default function AccountPage() {
         throw new Error(data.error || "Failed to update profile")
       }
 
-      // Clear password fields on success
       if (formData.newPassword) {
         setFormData((prev) => ({
           ...prev,
@@ -361,57 +418,131 @@ export default function AccountPage() {
       }
 
       setAlert({ type: "success", message: data.message })
-    } catch  {
+    } catch (error) {
       setAlert({ type: "error", message: "Failed to update profile" })
     } finally {
       setIsSaving(false)
     }
   }
 
+  useEffect(() => {
+    if (session === null) {
+      router.push("/")
+    } else {
+      setIsLoading(false)
+      if (user) {
+        setFormData((prev) => ({
+          ...prev,
+          username: user.username || "",
+          email: user.email || "",
+        }))
+      }
+    }
+  }, [session, router, user])
+
   if (isLoading) return null
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-gradient-to-br from-purple-50 via-white to-pink-50">
-        <AppSidebar />
+      <div
+        className={`flex min-h-screen w-full transition-colors duration-300 ${
+          isDarkMode
+            ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+            : "bg-gradient-to-br from-purple-50 via-white to-pink-50"
+        }`}
+      >
+        <AppSidebar isDarkMode={isDarkMode} />
         <SidebarInset className="flex-1">
-          {/* Header */}
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b border-purple-200 bg-white/90 backdrop-blur-sm px-6 shadow-sm">
-            <SidebarTrigger className="-ml-1 w-8 h-8 text-gray-600 hover:text-gray-900 hover:cursor-pointer duration-500" />
+          <header
+            className={`flex h-16 shrink-0 items-center gap-2 border-b backdrop-blur-sm px-6 shadow-sm transition-colors duration-300 ${
+              isDarkMode ? "border-gray-700 bg-gray-900/90" : "border-purple-200 bg-white/90"
+            }`}
+          >
+            <SidebarTrigger
+              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-colors duration-300 ${
+                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+              }`}
+            />
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">My Account</h1>
-                <p className="text-sm text-gray-600">Manage your profile and account settings</p>
+                <h1
+                  className={`text-xl font-semibold transition-colors duration-300 ${
+                    isDarkMode ? "text-gray-100" : "text-gray-900"
+                  }`}
+                >
+                  My Account
+                </h1>
+                <p
+                  className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                >
+                  Manage your profile and account settings
+                </p>
               </div>
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={`transition-colors duration-300 ${
+                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
                   <Bell className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900 duration-500">
-                  <MoonStar className="h-4 w-4" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleDarkMode}
+                  className={`transition-colors duration-300 ${
+                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
                 </Button>
               </div>
             </div>
           </header>
 
-          {/* Main Content */}
           <main className="flex-1 p-6">
             <div className="max-w-2xl mx-auto space-y-6">
-              {/* Alert */}
               {alert && (
                 <Alert
-                  className={`${alert.type === "success" ? "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200" : "bg-gradient-to-r from-red-50 to-pink-50 border-red-300"}`}
+                  className={`transition-colors duration-300 ${
+                    alert.type === "success"
+                      ? isDarkMode
+                        ? "bg-gradient-to-r from-green-900/50 to-emerald-900/50 border-green-700"
+                        : "bg-gradient-to-r from-green-50 to-emerald-50 border-green-200"
+                      : isDarkMode
+                        ? "bg-gradient-to-r from-red-900/50 to-pink-900/50 border-red-700"
+                        : "bg-gradient-to-r from-red-50 to-pink-50 border-red-300"
+                  }`}
                 >
-                  <AlertDescription className={`${alert.type === "success" ? "text-green-700" : "text-red-700"}`}>
+                  <AlertDescription
+                    className={`transition-colors duration-300 ${
+                      alert.type === "success"
+                        ? isDarkMode
+                          ? "text-green-300"
+                          : "text-green-700"
+                        : isDarkMode
+                          ? "text-red-300"
+                          : "text-red-700"
+                    }`}
+                  >
                     {alert.message}
                   </AlertDescription>
                 </Alert>
               )}
 
-              {/* Profile Picture Card */}
-              <Card className="bg-white shadow-sm border border-gray-200">
+              <Card
+                className={`shadow-sm border transition-colors duration-300 ${
+                  isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                }`}
+              >
                 <CardHeader>
-                  <CardTitle className="text-gray-900 flex items-center space-x-2">
+                  <CardTitle
+                    className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      isDarkMode ? "text-gray-100" : "text-gray-900"
+                    }`}
+                  >
                     <User className="h-5 w-5 text-purple-600" />
                     <span>Profile Picture</span>
                   </CardTitle>
@@ -425,56 +556,98 @@ export default function AccountPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <Button variant="outline" className="hover:bg-purple-50 border-purple-200 bg-transparent text-gray-900">
+                      <Button
+                        variant="outline"
+                        className={`border-purple-200 bg-transparent transition-colors duration-300 ${
+                          isDarkMode
+                            ? "hover:bg-gray-700 text-gray-100 border-gray-600"
+                            : "hover:bg-purple-50 text-gray-900"
+                        }`}
+                      >
                         <Camera className="h-4 w-4 mr-2" />
                         Change Photo
                       </Button>
-                      <p className="text-sm text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB.</p>
+                      <p
+                        className={`text-sm mt-2 transition-colors duration-300 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        JPG, PNG or GIF. Max size 2MB.
+                      </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Personal Information Card */}
-              <Card className="bg-white shadow-sm border border-gray-200">
+              <Card
+                className={`shadow-sm border transition-colors duration-300 ${
+                  isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                }`}
+              >
                 <CardHeader>
-                  <CardTitle className="text-gray-900 flex items-center space-x-2">
+                  <CardTitle
+                    className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      isDarkMode ? "text-gray-100" : "text-gray-900"
+                    }`}
+                  >
                     <CircleUser className="h-5 w-5 text-purple-600" />
                     <span>Personal Information</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="username" className="text-gray-700">
+                    <Label
+                      htmlFor="username"
+                      className={`transition-colors duration-300 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+                    >
                       Username
                     </Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-900" />
+                      <User
+                        className={`absolute left-3 top-3 h-4 w-4 transition-colors duration-300 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-900"
+                        }`}
+                      />
                       <Input
                         id="username"
                         name="username"
                         type="text"
                         value={formData.username}
                         onChange={handleInputChange}
-                        className="pl-10 border-gray-300 focus:border-purple-500 focus:ring-purple-500 text-gray-900"
+                        className={`pl-10 focus:border-purple-500 focus:ring-purple-500 transition-colors duration-300 ${
+                          isDarkMode
+                            ? "border-gray-600 bg-gray-700 text-gray-100 placeholder-gray-400"
+                            : "border-gray-300 text-gray-900"
+                        }`}
                         placeholder="Enter your username"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-gray-700">
+                    <Label
+                      htmlFor="email"
+                      className={`transition-colors duration-300 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+                    >
                       Email Address
                     </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-900" />
+                      <Mail
+                        className={`absolute left-3 top-3 h-4 w-4 transition-colors duration-300 ${
+                          isDarkMode ? "text-gray-400" : "text-gray-900"
+                        }`}
+                      />
                       <Input
                         id="email"
                         name="email"
                         type="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="pl-10 border-gray-300 focus:border-purple-500 focus:ring-purple-500 text-gray-900"
+                        className={`pl-10 focus:border-purple-500 focus:ring-purple-500 transition-colors duration-300 ${
+                          isDarkMode
+                            ? "border-gray-600 bg-gray-700 text-gray-100 placeholder-gray-400"
+                            : "border-gray-300 text-gray-900"
+                        }`}
                         placeholder="Enter your email address"
                       />
                     </div>
@@ -482,12 +655,11 @@ export default function AccountPage() {
                 </CardContent>
               </Card>
 
-              {/* Save Button */}
               <div className="flex justify-end">
                 <Button
                   onClick={handleSaveProfile}
                   disabled={isSaving}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 transition-all duration-300"
                 >
                   {isSaving ? (
                     <>
