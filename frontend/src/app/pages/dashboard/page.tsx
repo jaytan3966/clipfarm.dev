@@ -106,12 +106,12 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
 
   return (
     <Sidebar
-      className={`border-r shadow-sm hover:cursor-pointer transition-all duration-300 ${
+      className={`border-r shadow-sm hover:cursor-pointer transition-all duration-200 ease-in-out transform ${
         isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
       }`}
     >
       <SidebarHeader
-        className={`border-b transition-all duration-300 ${
+        className={`border-b transition-all duration-200 ${
           isDarkMode
             ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
             : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
@@ -140,7 +140,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
                   isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
@@ -149,7 +149,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Past Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-all duration-300 ${
+                  className={`h-4 w-4 transition-all duration-200 ${
                     openSections.pastClips ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -161,7 +161,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   {pastClipsItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`flex items-center justify-between hover:cursor-pointer px-3 py-2 rounded-md transition-all duration-300 ${
+                        className={`flex items-center justify-between hover:cursor-pointer px-3 py-2 rounded-md transition-all duration-200 ${
                           isDarkMode
                             ? "hover:bg-gray-800 text-gray-300 hover:text-gray-100"
                             : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
@@ -169,13 +169,13 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                       >
                         <div className="flex items-center space-x-2">
                           <item.icon
-                            className={`h-4 w-4 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                            className={`h-4 w-4 transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                           />
                           <span className="text-sm">{item.title}</span>
                         </div>
                         <Badge
                           variant="secondary"
-                          className={`text-xs transition-all duration-300 ${
+                          className={`text-xs transition-all duration-200 ${
                             isDarkMode
                               ? "bg-gray-700 text-purple-300 hover:bg-gray-600"
                               : "bg-purple-100 text-purple-700 hover:bg-purple-200"
@@ -201,7 +201,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
                   isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
@@ -210,7 +210,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Tokens & Payments</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-all duration-300 ${
+                  className={`h-4 w-4 transition-all duration-200 ${
                     openSections.tokens ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -222,7 +222,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   {tokenItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-300 ${
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-200 ${
                           item.action
                             ? isDarkMode
                               ? "text-purple-400 hover:text-purple-300 hover:bg-gray-800"
@@ -238,7 +238,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                             <span className="text-sm font-medium">{item.title}</span>
                             {item.value && (
                               <span
-                                className={`text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                                className={`text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                               >
                                 {item.value}
                               </span>
@@ -263,7 +263,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-300 ${
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
                   isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
@@ -272,7 +272,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Generate Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-all duration-300 ${
+                  className={`h-4 w-4 transition-all duration-200 ${
                     openSections.generate ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -284,7 +284,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   {generateItems.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
-                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-300 ${
+                        className={`px-3 py-2 rounded-md hover:cursor-pointer transition-all duration-200 ${
                           isDarkMode
                             ? "hover:bg-gray-800 text-gray-300 hover:text-gray-100"
                             : "hover:bg-purple-50 text-gray-700 hover:text-gray-900"
@@ -292,12 +292,12 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                       >
                         <div className="flex items-center space-x-2">
                           <item.icon
-                            className={`h-4 w-4 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                            className={`h-4 w-4 transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                           />
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{item.title}</span>
                             <span
-                              className={`text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                              className={`text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                             >
                               {item.description}
                             </span>
@@ -314,7 +314,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
       </SidebarContent>
 
       <SidebarFooter
-        className={`border-t transition-all duration-300 ${
+        className={`border-t transition-all duration-200 ${
           isDarkMode
             ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
             : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
@@ -325,7 +325,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
-                  className={`w-full px-3 py-2 rounded-lg transition-all duration-300 ${isDarkMode ? "hover:bg-gray-800" : "hover:bg-purple-100"}`}
+                  className={`w-full px-3 py-2 rounded-lg transition-all duration-200 ${isDarkMode ? "hover:bg-gray-800" : "hover:bg-purple-100"}`}
                 >
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg?height=24&width=24" />
@@ -335,7 +335,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
                     <span
-                      className={`text-sm font-medium transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                      className={`text-sm font-medium transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                     >
                       {user ? user.username : "null"}
                     </span>
@@ -345,10 +345,10 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className={`w-56 transition-all duration-300 ${isDarkMode ? "bg-gray-800 text-gray-100" : "text-gray-900"}`}
+                className={`w-56 transition-all duration-200 ${isDarkMode ? "bg-gray-800 text-gray-100" : "text-gray-900"}`}
               >
                 <DropdownMenuItem
-                  className={`hover:cursor-pointer transition-all duration-300 ${
+                  className={`hover:cursor-pointer transition-all duration-200 ${
                     isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
                   }`}
                   onClick={() => router.push("/pages/account")}
@@ -357,7 +357,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   My Account
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className={`hover:cursor-pointer transition-all duration-300 ${
+                  className={`hover:cursor-pointer transition-all duration-200 ${
                     isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
                   }`}
                   onClick={() => router.push("/pages/billing")}
@@ -367,7 +367,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => logout()}
-                  className={`hover:cursor-pointer transition-all duration-300 ${
+                  className={`hover:cursor-pointer transition-all duration-200 ${
                     isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
                   }`}
                 >
@@ -456,36 +456,36 @@ export default function Dashboard() {
   return (
     <SidebarProvider>
       <div
-        className={`flex min-h-screen w-full transition-all duration-300 ${
+        className={`flex min-h-screen w-full transition-all duration-200 ease-in-out ${
           isDarkMode
             ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
             : "bg-gradient-to-br from-purple-50 via-white to-pink-50"
         }`}
       >
         <AppSidebar isDarkMode={isDarkMode} />
-        <SidebarInset className="flex-1">
+        <SidebarInset className="flex-1 transition-all duration-200 ease-in-out">
           {/* Header */}
           <header
-            className={`flex h-16 shrink-0 items-center gap-2 border-b px-6 shadow-sm transition-all duration-300 ${
+            className={`flex h-16 shrink-0 items-center gap-2 border-b px-6 shadow-sm transition-all duration-200 ${
               isDarkMode
                 ? "border-gray-700 bg-gray-900/90 backdrop-blur-sm"
                 : "border-purple-200 bg-white/90 backdrop-blur-sm"
             }`}
           >
             <SidebarTrigger
-              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-all duration-300 ${
+              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-all duration-200 ${
                 isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h1
-                  className={`text-xl font-semibold transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                  className={`text-xl font-semibold transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                 >
                   Dashboard
                 </h1>
                 <p
-                  className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                  className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 >
                   Manage your clips and generate new content
                 </p>
@@ -494,7 +494,7 @@ export default function Dashboard() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`transition-all duration-300 ${
+                  className={`transition-all duration-200 ${
                     isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
@@ -503,7 +503,7 @@ export default function Dashboard() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`transition-all duration-300 ${
+                  className={`transition-all duration-200 ${
                     isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
                   }`}
                   onClick={toggleDarkMode}
@@ -516,15 +516,15 @@ export default function Dashboard() {
 
           {/* Main Content */}
           <main
-            className={`flex-1 p-6 transition-all duration-300 ${isDarkMode ? "bg-gray-900/50" : "bg-transparent"}`}
+            className={`flex-1 p-6 transition-all duration-200 ${isDarkMode ? "bg-gray-900/50" : "bg-transparent"}`}
           >
             <div className="mb-6">
               <h2
-                className={`text-2xl font-bold mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                className={`text-2xl font-bold mb-2 transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
               >
                 Your Clips
               </h2>
-              <p className={`transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+              <p className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                 Create new clips or manage your existing ones
               </p>
             </div>
@@ -533,23 +533,23 @@ export default function Dashboard() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {/* Create New Clip Card */}
               <Card
-                className={`border-2 border-dashed hover:shadow-md transition-all duration-300 cursor-pointer group ${
+                className={`border-2 border-dashed hover:shadow-md transition-all duration-200 cursor-pointer group ${
                   isDarkMode
                     ? "border-gray-600 bg-gradient-to-br from-gray-800 to-gray-900 hover:border-gray-500 hover:shadow-gray-900/50"
                     : "border-purple-300 bg-gradient-to-br from-purple-50 to-pink-50 hover:border-purple-400"
                 }`}
               >
                 <CardContent className="flex flex-col items-center justify-center h-64 text-center p-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200 shadow-lg">
                     <Plus className="h-8 w-8 text-white" />
                   </div>
                   <h3
-                    className={`font-semibold text-lg mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                    className={`font-semibold text-lg mb-2 transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                   >
                     Create New Clip
                   </h3>
                   <p
-                    className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                    className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                   >
                     Upload a video and let AI create engaging clips
                   </p>
@@ -560,7 +560,7 @@ export default function Dashboard() {
               {pastClips.map((clip) => (
                 <Card
                   key={clip.id}
-                  className={`overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border pt-0 ${
+                  className={`overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border pt-0 ${
                     isDarkMode ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50" : "bg-white border-gray-200"
                   }`}
                 >
@@ -601,7 +601,7 @@ export default function Dashboard() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm transition-all duration-300"
+                            className="h-8 w-8 bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm transition-all duration-200"
                           >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
@@ -627,20 +627,20 @@ export default function Dashboard() {
                       </DropdownMenu>
                     </div>
                   </div>
-                  <CardContent className={`transition-all duration-300 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+                  <CardContent className={`transition-all duration-200 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
                     <h3
-                      className={`font-semibold text-sm mb-2 line-clamp-2 transition-colors duration-300 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                      className={`font-semibold text-sm mb-2 line-clamp-2 transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                     >
                       {clip.title}
                     </h3>
                     <div
-                      className={`flex items-center justify-between text-xs mb-2 transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                      className={`flex items-center justify-between text-xs mb-2 transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                     >
                       <span className="font-medium">{clip.platform}</span>
                       <span>{clip.created}</span>
                     </div>
                     <div
-                      className={`flex items-center space-x-1 text-xs transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                      className={`flex items-center space-x-1 text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                     >
                       <Eye className="h-3 w-3" />
                       <span className="font-medium">{clip.views.toLocaleString()} views</span>

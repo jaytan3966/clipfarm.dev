@@ -107,15 +107,13 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
 
   return (
     <Sidebar
-      className={`border-r shadow-sm hover:cursor-pointer transition-colors duration-300 ${
+      className={`border-r shadow-sm hover:cursor-pointer transition-all duration-200 ease-in-out ${
         isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
       }`}
     >
       <SidebarHeader
-        className={`border-b transition-colors duration-300 ${
-          isDarkMode
-            ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
-            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        className={`border-b transition-colors duration-200 ease-in-out ${
+          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
         }`}
       >
         <div className="flex items-center space-x-2 px-4 py-3">
@@ -126,7 +124,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent cursor-pointer"
             onClick={() => router.push("/pages/dashboard")}
           >
-            clipfarm.dev
+            clipfarm.ai
           </span>
         </div>
       </SidebarHeader>
@@ -141,8 +139,8 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -150,7 +148,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Past Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${
+                  className={`h-4 w-4 transition-transform duration-200 ease-in-out ${
                     openSections.pastClips ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -191,8 +189,8 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -200,7 +198,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Tokens & Payments</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${
+                  className={`h-4 w-4 transition-transform duration-200 ease-in-out ${
                     openSections.tokens ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -251,8 +249,8 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-300 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
+                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -260,7 +258,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   <span className="font-semibold text-sm">Generate Clips</span>
                 </div>
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-200 ${
+                  className={`h-4 w-4 transition-transform duration-200 ease-in-out ${
                     openSections.generate ? "rotate-180" : ""
                   } ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                 />
@@ -298,10 +296,8 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
       </SidebarContent>
 
       <SidebarFooter
-        className={`border-t transition-colors duration-300 ${
-          isDarkMode
-            ? "border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900"
-            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+        className={`border-t transition-colors duration-200 ease-in-out ${
+          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
         }`}
       >
         <SidebarMenu>
@@ -309,8 +305,8 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
-                  className={`w-full px-3 py-2 rounded-lg transition-colors duration-300 ${
-                    isDarkMode ? "hover:bg-gray-800" : "hover:bg-purple-100"
+                  className={`w-full px-3 py-2 rounded-lg transition-colors duration-200 ease-in-out ${
+                    isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-100"
                   }`}
                 >
                   <Avatar className="h-6 w-6">
@@ -329,12 +325,12 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className={`w-56 transition-colors duration-300 ${
+                className={`w-56 transition-colors duration-200 ease-in-out ${
                   isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                 }`}
               >
                 <DropdownMenuItem
-                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                  className={`hover:cursor-pointer transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "hover:bg-gray-700 text-gray-200" : "hover:bg-purple-50 text-gray-900"
                   }`}
                   onClick={() => router.push("/pages/account")}
@@ -343,7 +339,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   My Account
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                  className={`hover:cursor-pointer transition-colors duration-200 ease-in-out ${
                     isDarkMode
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-200"
                       : "bg-purple-100 hover:bg-purple-50 text-gray-900"
@@ -355,7 +351,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => logout()}
-                  className={`hover:cursor-pointer transition-colors duration-300 ${
+                  className={`hover:cursor-pointer transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "hover:bg-gray-700 text-gray-200" : "hover:bg-purple-50 text-gray-900"
                   }`}
                 >
@@ -378,6 +374,7 @@ export default function BillingPage() {
   const { isDarkMode, toggleDarkMode } = useDarkMode()
 
   const session = useAuth()
+  const user = useUserProfile()
 
   // Mock billing data
   const currentPlan = {
@@ -468,7 +465,7 @@ export default function BillingPage() {
   return (
     <SidebarProvider>
       <div
-        className={`flex min-h-screen w-full transition-colors duration-300 ${
+        className={`flex min-h-screen w-full transition-colors duration-200 ease-in-out ${
           isDarkMode
             ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
             : "bg-gradient-to-br from-purple-50 via-white to-pink-50"
@@ -478,26 +475,28 @@ export default function BillingPage() {
         <SidebarInset className="flex-1">
           {/* Header */}
           <header
-            className={`flex h-16 shrink-0 items-center gap-2 border-b backdrop-blur-sm px-6 shadow-sm transition-colors duration-300 ${
+            className={`flex h-16 shrink-0 items-center gap-2 border-b backdrop-blur-sm px-6 shadow-sm transition-colors duration-200 ease-in-out ${
               isDarkMode ? "border-gray-700 bg-gray-900/90" : "border-purple-200 bg-white/90"
             }`}
           >
             <SidebarTrigger
-              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-colors duration-300 ${
+              className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
                 isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h1
-                  className={`text-xl font-semibold transition-colors duration-300 ${
+                  className={`text-xl font-semibold transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "text-gray-100" : "text-gray-900"
                   }`}
                 >
                   Billing & Subscription
                 </h1>
                 <p
-                  className={`text-sm transition-colors duration-300 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+                  className={`text-sm transition-colors duration-200 ease-in-out ${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
                 >
                   Manage your subscription, usage, and payment methods
                 </p>
@@ -506,7 +505,7 @@ export default function BillingPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
+                  className={`transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
@@ -515,7 +514,7 @@ export default function BillingPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
+                  className={`transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
                   }`}
                   onClick={toggleDarkMode}
@@ -532,7 +531,7 @@ export default function BillingPage() {
               {/* Alert */}
               {alert && (
                 <Alert
-                  className={`transition-colors duration-300 ${
+                  className={`transition-colors duration-200 ease-in-out ${
                     alert.type === "success"
                       ? isDarkMode
                         ? "bg-gradient-to-r from-green-900/50 to-emerald-900/50 border-green-700"
@@ -547,7 +546,7 @@ export default function BillingPage() {
                   }`}
                 >
                   <AlertDescription
-                    className={`transition-colors duration-300 ${
+                    className={`transition-colors duration-200 ease-in-out ${
                       alert.type === "success"
                         ? isDarkMode
                           ? "text-green-300"
@@ -570,13 +569,13 @@ export default function BillingPage() {
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {/* Current Plan */}
                 <Card
-                  className={`shadow-sm border transition-colors duration-300 ${
+                  className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader className="pb-3">
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -588,7 +587,7 @@ export default function BillingPage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-2xl font-bold transition-colors duration-300 ${
+                          className={`text-2xl font-bold transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-100" : "text-gray-900"
                           }`}
                         >
@@ -597,14 +596,14 @@ export default function BillingPage() {
                         <Badge className="bg-green-100 text-green-700 hover:bg-green-200">{currentPlan.status}</Badge>
                       </div>
                       <p
-                        className={`text-sm transition-colors duration-300 ${
+                        className={`text-sm transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-400" : "text-gray-600"
                         }`}
                       >
                         ${currentPlan.price}/{currentPlan.billing}
                       </p>
                       <p
-                        className={`text-xs transition-colors duration-300 ${
+                        className={`text-xs transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-500" : "text-gray-500"
                         }`}
                       >
@@ -616,13 +615,13 @@ export default function BillingPage() {
 
                 {/* Clips Usage */}
                 <Card
-                  className={`shadow-sm border transition-colors duration-300 ${
+                  className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader className="pb-3">
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -634,14 +633,14 @@ export default function BillingPage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-2xl font-bold transition-colors duration-300 ${
+                          className={`text-2xl font-bold transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-100" : "text-gray-900"
                           }`}
                         >
                           {usage.clipsUsed}
                         </span>
                         <span
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-500" : "text-gray-500"
                           }`}
                         >
@@ -650,7 +649,7 @@ export default function BillingPage() {
                       </div>
                       <Progress value={(usage.clipsUsed / usage.clipsLimit) * 100} className="h-2" />
                       <p
-                        className={`text-xs transition-colors duration-300 ${
+                        className={`text-xs transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-500" : "text-gray-500"
                         }`}
                       >
@@ -662,13 +661,13 @@ export default function BillingPage() {
 
                 {/* Tokens Usage */}
                 <Card
-                  className={`shadow-sm border transition-colors duration-300 ${
+                  className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader className="pb-3">
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -680,14 +679,14 @@ export default function BillingPage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-2xl font-bold transition-colors duration-300 ${
+                          className={`text-2xl font-bold transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-100" : "text-gray-900"
                           }`}
                         >
                           {usage.tokensUsed}
                         </span>
                         <span
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-500" : "text-gray-500"
                           }`}
                         >
@@ -696,7 +695,7 @@ export default function BillingPage() {
                       </div>
                       <Progress value={(usage.tokensUsed / usage.tokensLimit) * 100} className="h-2" />
                       <p
-                        className={`text-xs transition-colors duration-300 ${
+                        className={`text-xs transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-500" : "text-gray-500"
                         }`}
                       >
@@ -708,13 +707,13 @@ export default function BillingPage() {
 
                 {/* Storage Usage */}
                 <Card
-                  className={`shadow-sm border transition-colors duration-300 ${
+                  className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader className="pb-3">
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -726,14 +725,14 @@ export default function BillingPage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-2xl font-bold transition-colors duration-300 ${
+                          className={`text-2xl font-bold transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-100" : "text-gray-900"
                           }`}
                         >
                           {usage.storageUsed}GB
                         </span>
                         <span
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-500" : "text-gray-500"
                           }`}
                         >
@@ -742,7 +741,7 @@ export default function BillingPage() {
                       </div>
                       <Progress value={(usage.storageUsed / usage.storageLimit) * 100} className="h-2" />
                       <p
-                        className={`text-xs transition-colors duration-300 ${
+                        className={`text-xs transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-500" : "text-gray-500"
                         }`}
                       >
@@ -757,13 +756,13 @@ export default function BillingPage() {
               <div className="grid gap-6 lg:grid-cols-3">
                 {/* Plan Features */}
                 <Card
-                  className={`lg:col-span-2 shadow-sm border transition-colors duration-300 ${
+                  className={`lg:col-span-2 shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader>
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -777,7 +776,7 @@ export default function BillingPage() {
                         <div key={index} className="flex items-center space-x-2">
                           <Check className="h-4 w-4 text-green-500" />
                           <span
-                            className={`text-sm transition-colors duration-300 ${
+                            className={`text-sm transition-colors duration-200 ease-in-out ${
                               isDarkMode ? "text-gray-300" : "text-gray-700"
                             }`}
                           >
@@ -791,13 +790,13 @@ export default function BillingPage() {
 
                 {/* Quick Actions */}
                 <Card
-                  className={`shadow-sm border transition-colors duration-300 ${
+                  className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                     isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader>
                     <CardTitle
-                      className={`flex items-center space-x-2 transition-colors duration-300 ${
+                      className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                         isDarkMode ? "text-gray-100" : "text-gray-900"
                       }`}
                     >
@@ -808,7 +807,7 @@ export default function BillingPage() {
                   <CardContent className="space-y-3">
                     <Button
                       onClick={handleUpgrade}
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors duration-300"
+                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors duration-200 ease-in-out"
                     >
                       <ArrowUpRight className="h-4 w-4 mr-2" />
                       Upgrade Plan
@@ -816,7 +815,7 @@ export default function BillingPage() {
                     <Button
                       onClick={handleUpdatePayment}
                       variant="outline"
-                      className={`w-full bg-transparent transition-colors duration-300 ${
+                      className={`w-full bg-transparent transition-colors duration-200 ease-in-out ${
                         isDarkMode
                           ? "border-gray-600 hover:bg-gray-700 text-gray-300"
                           : "border-purple-200 hover:bg-purple-50 text-gray-700"
@@ -828,7 +827,7 @@ export default function BillingPage() {
                     <Button
                       onClick={handleCancelSubscription}
                       variant="outline"
-                      className={`w-full bg-transparent transition-colors duration-300 ${
+                      className={`w-full bg-transparent transition-colors duration-200 ease-in-out ${
                         isDarkMode
                           ? "border-red-700 text-red-400 hover:bg-red-900/20"
                           : "border-red-200 text-red-600 hover:bg-red-50"
@@ -843,13 +842,13 @@ export default function BillingPage() {
 
               {/* Payment History */}
               <Card
-                className={`shadow-sm border transition-colors duration-300 ${
+                className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                   isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                 }`}
               >
                 <CardHeader>
                   <CardTitle
-                    className={`flex items-center justify-between transition-colors duration-300 ${
+                    className={`flex items-center justify-between transition-colors duration-200 ease-in-out ${
                       isDarkMode ? "text-gray-100" : "text-gray-900"
                     }`}
                   >
@@ -860,7 +859,7 @@ export default function BillingPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className={`bg-transparent transition-colors duration-300 ${
+                      className={`bg-transparent transition-colors duration-200 ease-in-out ${
                         isDarkMode
                           ? "border-gray-600 hover:bg-gray-700 text-gray-300"
                           : "border-purple-200 hover:bg-purple-50 text-gray-700"
@@ -875,7 +874,7 @@ export default function BillingPage() {
                   <Table>
                     <TableHeader>
                       <TableRow
-                        className={`transition-colors duration-300 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+                        className={`transition-colors duration-200 ease-in-out ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
                       >
                         <TableHead>Date</TableHead>
                         <TableHead>Description</TableHead>
@@ -888,7 +887,7 @@ export default function BillingPage() {
                       {paymentHistory.map((payment) => (
                         <TableRow
                           key={payment.id}
-                          className={`transition-colors duration-300 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
+                          className={`transition-colors duration-200 ease-in-out ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
                         >
                           <TableCell className="font-medium">{new Date(payment.date).toLocaleDateString()}</TableCell>
                           <TableCell>{payment.description}</TableCell>
@@ -908,7 +907,7 @@ export default function BillingPage() {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className={`transition-colors duration-300 ${
+                              className={`transition-colors duration-200 ease-in-out ${
                                 isDarkMode
                                   ? "text-purple-400 hover:text-purple-300"
                                   : "text-purple-600 hover:text-purple-700"
@@ -927,13 +926,13 @@ export default function BillingPage() {
 
               {/* Billing Information */}
               <Card
-                className={`shadow-sm border transition-colors duration-300 ${
+                className={`shadow-sm border transition-colors duration-200 ease-in-out ${
                   isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                 }`}
               >
                 <CardHeader>
                   <CardTitle
-                    className={`flex items-center space-x-2 transition-colors duration-300 ${
+                    className={`flex items-center space-x-2 transition-colors duration-200 ease-in-out ${
                       isDarkMode ? "text-gray-100" : "text-gray-900"
                     }`}
                   >
@@ -945,32 +944,32 @@ export default function BillingPage() {
                   <div className="grid gap-6 md:grid-cols-2">
                     <div>
                       <h4
-                        className={`font-medium mb-2 transition-colors duration-300 ${
+                        className={`font-medium mb-2 transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-100" : "text-gray-900"
                         }`}
                       >
                         Payment Method
                       </h4>
                       <div
-                        className={`flex items-center space-x-3 p-3 border rounded-lg transition-colors duration-300 ${
+                        className={`flex items-center space-x-3 p-3 border rounded-lg transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "border-gray-600 bg-gray-700/50" : "border-gray-200 bg-white"
                         }`}
                       >
                         <CreditCard
-                          className={`h-5 w-5 transition-colors duration-300 ${
+                          className={`h-5 w-5 transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-500" : "text-gray-400"
                           }`}
                         />
                         <div>
                           <p
-                            className={`text-sm font-medium transition-colors duration-300 ${
+                            className={`text-sm font-medium transition-colors duration-200 ease-in-out ${
                               isDarkMode ? "text-gray-100" : "text-gray-900"
                             }`}
                           >
                             •••• •••• •••• 4242
                           </p>
                           <p
-                            className={`text-xs transition-colors duration-300 ${
+                            className={`text-xs transition-colors duration-200 ease-in-out ${
                               isDarkMode ? "text-gray-500" : "text-gray-500"
                             }`}
                           >
@@ -981,40 +980,40 @@ export default function BillingPage() {
                     </div>
                     <div>
                       <h4
-                        className={`font-medium mb-2 transition-colors duration-300 ${
+                        className={`font-medium mb-2 transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "text-gray-100" : "text-gray-900"
                         }`}
                       >
                         Billing Address
                       </h4>
                       <div
-                        className={`p-3 border rounded-lg transition-colors duration-300 ${
+                        className={`p-3 border rounded-lg transition-colors duration-200 ease-in-out ${
                           isDarkMode ? "border-gray-600 bg-gray-700/50" : "border-gray-200 bg-white"
                         }`}
                       >
                         <p
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-100" : "text-gray-900"
                           }`}
                         >
                           John Doe
                         </p>
                         <p
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
                           123 Main Street
                         </p>
                         <p
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
                           San Francisco, CA 94105
                         </p>
                         <p
-                          className={`text-sm transition-colors duration-300 ${
+                          className={`text-sm transition-colors duration-200 ease-in-out ${
                             isDarkMode ? "text-gray-400" : "text-gray-600"
                           }`}
                         >
