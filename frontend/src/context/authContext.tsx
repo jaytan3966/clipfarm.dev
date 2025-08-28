@@ -15,6 +15,9 @@ export function AuthProvider({children} : React.PropsWithChildren){
         })
 
         const { data: {subscription} } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === "SIGNED_IN") {
+                router.push("/pages/dashboard");
+            }
             if (event === "SIGNED_OUT") {
                 console.log("Signed out")
                 router.push("/");
@@ -23,7 +26,7 @@ export function AuthProvider({children} : React.PropsWithChildren){
         });
 
         return () => subscription.unsubscribe();
-    });
+    }, []);
     
     return (
     <AuthContext.Provider value={session}>
