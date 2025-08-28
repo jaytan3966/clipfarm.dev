@@ -124,7 +124,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent cursor-pointer"
             onClick={() => router.push("/pages/dashboard")}
           >
-            clipfarm.ai
+            clipfarm.dev
           </span>
         </div>
       </SidebarHeader>
