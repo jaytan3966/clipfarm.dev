@@ -23,7 +23,7 @@ export function AuthProvider({children} : React.PropsWithChildren){
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    });
     
     return (
     <AuthContext.Provider value={session}>
