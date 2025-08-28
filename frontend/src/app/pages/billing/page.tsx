@@ -374,7 +374,6 @@ export default function BillingPage() {
   const { isDarkMode, toggleDarkMode } = useDarkMode()
 
   const session = useAuth()
-  const user = useUserProfile()
 
   // Mock billing data
   const currentPlan = {
