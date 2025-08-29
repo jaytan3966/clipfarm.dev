@@ -29,8 +29,6 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   })
   const [error, setError] = useState("");
 
-  const router = useRouter();
-
   useEffect(() => {
     setError('');
   }, [isSignUp])
@@ -86,6 +84,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const handleGitHubSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
+      options: {
+        redirectTo: `${window.location.origin}/pages/dashboard`
+      }
     });
     if (error) {
       setError("Github sign-in failed. Try again.")
@@ -95,6 +96,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/pages/dashboard`
+      }
     });
     if (error) {
       setError("Google sign-in failed. Try again.")
