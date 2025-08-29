@@ -11,8 +11,6 @@ import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Mail, Lock, User, Eye, EyeOff, Github, Chrome, Ban } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
-import { useRouter } from "next/navigation"
-
 
 interface AuthModalProps {
   open: boolean

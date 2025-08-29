@@ -111,7 +111,7 @@ export default function LandingPage() {
                     className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
                     onClick={handleGetStarted}
                   >
-                    Start Creating For Free <ChevronRight className="h-4 w-4" />
+                    {session? "Continue Creating" : "Start Creating For Free"} <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />
@@ -246,7 +246,7 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button className="mt-6 bg-transparent hover:cursor-pointer duration-500" variant="outline" onClick={handleGetStarted}>
-                  Get Started For Free
+                  {session? "Continue Creating" : "Get Started For Free"}
                 </Button>
               </div>
               <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm ring-2 ring-purple-500">
@@ -309,7 +309,7 @@ export default function LandingPage() {
                     className="gap-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 duration-500 hover:cursor-pointer"
                     onClick={handleGetStarted}
                   >
-                    Start Creating For Free <ChevronRight className="h-4 w-4" />
+                    {session ? "Continue Creating" : "Start Creating For Free"} <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className="gap-1 bg-transparent text-gray-500 hover:bg-gray-800 hover:text-white duration-500 hover:cursor-pointer">
                     <Play className="h-4 w-4 " />

@@ -14,6 +14,14 @@ import { useAuth } from "@/context/authContext"
 import { useUserProfile } from "@/context/userProfileContext"
 import { useDarkMode } from "@/context/darkModeContext"
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -59,6 +67,7 @@ import {
 
 function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
   const router = useRouter()
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [openSections, setOpenSections] = useState({
     pastClips: true,
     tokens: false,
@@ -72,13 +81,18 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
     }))
   }
 
-  const logout = async () => {
+  const showLogoutConfirmation = () => {
+    setShowLogoutModal(true)
+  }
+
+  const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
       console.error("Error signing out:", error.message)
     } else {
       router.push("/")
     }
+    setShowLogoutModal(false)
   }
 
   const user = useUserProfile()
@@ -366,7 +380,7 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                   Billing
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => logout()}
+                  onClick={showLogoutConfirmation}
                   className={`hover:cursor-pointer transition-all duration-200 ${
                     isDarkMode ? "hover:bg-gray-700" : "hover:bg-purple-50"
                   }`}
@@ -379,6 +393,44 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+
+      <Dialog open={showLogoutModal} onOpenChange={setShowLogoutModal}>
+        <DialogContent
+          className={`transition-all duration-500 ease-in-out ${isDarkMode ? "bg-gray-800 text-gray-100 border-gray-700" : "bg-white text-gray-900"}`}
+        >
+          <DialogHeader>
+            <DialogTitle className={`transition-colors duration-500 ease-in-out ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}>
+              Confirm Logout
+            </DialogTitle>
+            <DialogDescription
+              className={`transition-colors duration-500 ease-in-out ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
+              Are you sure you want to log out? You&apos;ll need to sign in again to access your dashboard.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowLogoutModal(false)}
+              className={`transition-all duration-200 ${
+                isDarkMode
+                  ? "border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-gray-100"
+                  : "border-gray-300 text-gray-700 hover:bg-gray-50"
+              }`}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 text-white transition-all duration-500 ease-in-out"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Log Out
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Sidebar>
   )
 }
