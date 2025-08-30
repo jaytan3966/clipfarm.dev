@@ -9,7 +9,8 @@
     "lint": "next lint",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -38,11 +39,14 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
+    "jest": "^30.1.1",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
