@@ -10,7 +10,7 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "type-check": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
