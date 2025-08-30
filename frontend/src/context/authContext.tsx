@@ -5,36 +5,36 @@ import { useRouter } from "next/navigation";
 
 const AuthContext = createContext<Session | null>(null);
 
-export function AuthProvider({children} : React.PropsWithChildren){
-    const [session, setSession] = useState<Session | null>(null);
-    const router = useRouter();
+export function AuthProvider({ children }: React.PropsWithChildren) {
+  const [session, setSession] = useState<Session | null>(null);
+  const router = useRouter();
 
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data }) => {
-            setSession(data.session);
-        })
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
 
-        const { data: {subscription} } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === "SIGNED_IN") {
-                router.push("/pages/dashboard");
-            }
-            if (event === "SIGNED_OUT") {
-                console.log("Signed out")
-                router.push("/");
-            }
-            setSession(session);
-        });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        router.push("/pages/dashboard");
+      }
+      if (event === "SIGNED_OUT") {
+        console.log("Signed out");
+        router.push("/");
+      }
+      setSession(session);
+    });
 
-        return () => subscription.unsubscribe();
-    }, [router]);
-    
-    return (
-    <AuthContext.Provider value={session}>
-        {children}
-    </AuthContext.Provider>
-    )
+    return () => subscription.unsubscribe();
+  }, [router]);
+
+  return (
+    <AuthContext.Provider value={session}>{children}</AuthContext.Provider>
+  );
 }
 
-export function useAuth(){
-    return useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
 }

@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
-import Image from "next/image"
-import { useEffect } from "react"
-import { supabase } from "@/lib/supabaseClient"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useAuth } from "@/context/authContext"
-import { useUserProfile } from "@/context/userProfileContext"
-import { useDarkMode } from "@/context/darkModeContext"
+import Image from "next/image";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/context/authContext";
+import { useUserProfile } from "@/context/userProfileContext";
+import { useDarkMode } from "@/context/darkModeContext";
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -35,9 +35,18 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Plus,
   Play,
@@ -63,39 +72,39 @@ import {
   CircleUser,
   MoonStar,
   Sun,
-} from "lucide-react"
+} from "lucide-react";
 
 function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
-  const router = useRouter()
-  const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const router = useRouter();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [openSections, setOpenSections] = useState({
     pastClips: true,
     tokens: false,
     generate: false,
-  })
+  });
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections((prev) => ({
       ...prev,
       [section]: !prev[section],
-    }))
-  }
+    }));
+  };
 
   const showLogoutConfirmation = () => {
-    setShowLogoutModal(true)
-  }
+    setShowLogoutModal(true);
+  };
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("Error signing out:", error.message)
+      console.error("Error signing out:", error.message);
     } else {
-      router.push("/")
+      router.push("/");
     }
-    setShowLogoutModal(false)
-  }
+    setShowLogoutModal(false);
+  };
 
-  const user = useUserProfile()
+  const user = useUserProfile();
 
   const pastClipsItems = [
     { title: "All Clips", count: 127, icon: Video },
@@ -103,25 +112,35 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
     { title: "Completed", count: 115, icon: CheckCircle },
     { title: "Processing", count: 3, icon: Clock },
     { title: "Failed", count: 9, icon: AlertCircle },
-  ]
+  ];
 
   const tokenItems = [
     { title: "Current Balance", value: "2,450 tokens", icon: Coins },
     { title: "Usage This Month", value: "1,200 tokens", icon: History },
     { title: "Buy More Tokens", action: true, icon: CreditCard },
     { title: "Payment History", action: true, icon: History },
-  ]
+  ];
 
   const generateItems = [
-    { title: "Quick Generate", description: "Upload & auto-clip", icon: Sparkles },
+    {
+      title: "Quick Generate",
+      description: "Upload & auto-clip",
+      icon: Sparkles,
+    },
     { title: "Batch Process", description: "Multiple videos", icon: Video },
-    { title: "Custom Settings", description: "Advanced options", icon: Settings },
-  ]
+    {
+      title: "Custom Settings",
+      description: "Advanced options",
+      icon: Settings,
+    },
+  ];
 
   return (
     <Sidebar
       className={`border-r shadow-sm hover:cursor-pointer transition-all duration-200 ease-in-out transform ${
-        isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
+        isDarkMode
+          ? "border-gray-700 bg-gray-900"
+          : "border-purple-200 bg-white"
       }`}
     >
       <SidebarHeader
@@ -155,7 +174,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-800 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -216,12 +237,16 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-800 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
                   <Coins className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold text-sm">Tokens & Payments</span>
+                  <span className="font-semibold text-sm">
+                    Tokens & Payments
+                  </span>
                 </div>
                 <ChevronDown
                   className={`h-4 w-4 transition-all duration-200 ${
@@ -249,7 +274,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4" />
                           <div className="flex flex-col">
-                            <span className="text-sm font-medium">{item.title}</span>
+                            <span className="text-sm font-medium">
+                              {item.title}
+                            </span>
                             {item.value && (
                               <span
                                 className={`text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
@@ -278,7 +305,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-all duration-200 ${
-                  isDarkMode ? "hover:bg-gray-800 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-800 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -309,7 +338,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                             className={`h-4 w-4 transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                           />
                           <div className="flex flex-col">
-                            <span className="text-sm font-medium">{item.title}</span>
+                            <span className="text-sm font-medium">
+                              {item.title}
+                            </span>
                             <span
                               className={`text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                             >
@@ -353,7 +384,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                     >
                       {user ? user.username : "null"}
                     </span>
-                    <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
+                    <span className="text-xs text-purple-600 font-medium">
+                      Pro Plan
+                    </span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -399,13 +432,16 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
           className={`transition-all duration-500 ease-in-out ${isDarkMode ? "bg-gray-800 text-gray-100 border-gray-700" : "bg-white text-gray-900"}`}
         >
           <DialogHeader>
-            <DialogTitle className={`transition-colors duration-500 ease-in-out ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}>
+            <DialogTitle
+              className={`transition-colors duration-500 ease-in-out ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+            >
               Confirm Logout
             </DialogTitle>
             <DialogDescription
               className={`transition-colors duration-500 ease-in-out ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
             >
-              Are you sure you want to log out? You&apos;ll need to sign in again to access your dashboard.
+              Are you sure you want to log out? You&apos;ll need to sign in
+              again to access your dashboard.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">
@@ -432,11 +468,11 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
         </DialogContent>
       </Dialog>
     </Sidebar>
-  )
+  );
 }
 
 export default function Dashboard() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   // Mock data for past clips
   const pastClips = [
@@ -490,20 +526,20 @@ export default function Dashboard() {
       created: "3 days ago",
       platform: "TikTok",
     },
-  ]
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const session = useAuth()
+  ];
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const session = useAuth();
 
   useEffect(() => {
     if (session === null) {
-      router.push("/")
+      router.push("/");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [session, router])
+  }, [session, router]);
 
-  if (isLoading) return null
+  if (isLoading) return null;
 
   return (
     <SidebarProvider>
@@ -526,7 +562,9 @@ export default function Dashboard() {
           >
             <SidebarTrigger
               className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-all duration-200 ${
-                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                isDarkMode
+                  ? "text-gray-400 hover:text-gray-100"
+                  : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
@@ -547,7 +585,9 @@ export default function Dashboard() {
                   variant="ghost"
                   size="icon"
                   className={`transition-all duration-200 ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   <Bell className="h-4 w-4" />
@@ -556,11 +596,17 @@ export default function Dashboard() {
                   variant="ghost"
                   size="icon"
                   className={`transition-all duration-200 ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                   onClick={toggleDarkMode}
                 >
-                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -576,7 +622,9 @@ export default function Dashboard() {
               >
                 Your Clips
               </h2>
-              <p className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+              <p
+                className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+              >
                 Create new clips or manage your existing ones
               </p>
             </div>
@@ -613,7 +661,9 @@ export default function Dashboard() {
                 <Card
                   key={clip.id}
                   className={`overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border pt-0 ${
-                    isDarkMode ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <div className="relative">
@@ -658,7 +708,10 @@ export default function Dashboard() {
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-black/60 text-white backdrop-blur-sm">
+                        <DropdownMenuContent
+                          align="end"
+                          className="bg-black/60 text-white backdrop-blur-sm"
+                        >
                           <DropdownMenuItem>
                             <Play className="mr-2 h-4 w-4" />
                             Preview
@@ -679,7 +732,9 @@ export default function Dashboard() {
                       </DropdownMenu>
                     </div>
                   </div>
-                  <CardContent className={`transition-all duration-200 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+                  <CardContent
+                    className={`transition-all duration-200 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+                  >
                     <h3
                       className={`font-semibold text-sm mb-2 line-clamp-2 transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                     >
@@ -695,7 +750,9 @@ export default function Dashboard() {
                       className={`flex items-center space-x-1 text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                     >
                       <Eye className="h-3 w-3" />
-                      <span className="font-medium">{clip.views.toLocaleString()} views</span>
+                      <span className="font-medium">
+                        {clip.views.toLocaleString()} views
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -705,5 +762,5 @@ export default function Dashboard() {
         </SidebarInset>
       </div>
     </SidebarProvider>
-  )
+  );
 }

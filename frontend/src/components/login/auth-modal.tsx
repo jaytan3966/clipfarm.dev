@@ -1,38 +1,53 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Mail, Lock, User, Eye, EyeOff, Github, Chrome, Ban } from "lucide-react"
-import { supabase } from "@/lib/supabaseClient"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Mail,
+  Lock,
+  User,
+  Eye,
+  EyeOff,
+  Github,
+  Chrome,
+  Ban,
+} from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 interface AuthModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function AuthModal({ open, onOpenChange }: AuthModalProps) {
-  const [isSignUp, setIsSignUp] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-  })
+  });
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setError('');
-  }, [isSignUp])
+    setError("");
+  }, [isSignUp]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!formData.email.includes("@")) {
       setError("Please enter a valid email.");
@@ -46,11 +61,10 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     const username = formData.username;
     const email = formData.email;
     const password = formData.password;
-    const { data, error: authError } =
-      isSignUp
-        ? await supabase.auth.signUp({ email, password })
-        : await supabase.auth.signInWithPassword({ email, password })
-         
+    const { data, error: authError } = isSignUp
+      ? await supabase.auth.signUp({ email, password })
+      : await supabase.auth.signInWithPassword({ email, password });
+
     if (authError) {
       setError(authError.message);
       return;
@@ -58,33 +72,33 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
     const session = await supabase.auth.getSession();
     const token = session?.data?.session?.access_token;
-    if (isSignUp){
-      const response = await fetch('/api/supabase-auth', {
-        method: 'POST',
+    if (isSignUp) {
+      const response = await fetch("/api/supabase-auth", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           id: data.user?.id,
           username: username.trim(),
-          email: email.toLowerCase().trim(), 
+          email: email.toLowerCase().trim(),
         }),
       });
       if (!response.ok) {
         setError(`User insertion error: user already exists.`);
         return;
-      } 
+      }
     }
     onOpenChange(false);
-  }
+  };
 
   const handleGitHubSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
     });
     if (error) {
-      setError("Github sign-in failed. Try again.")
+      setError("Github sign-in failed. Try again.");
     }
     onOpenChange(false);
   };
@@ -93,7 +107,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       provider: "google",
     });
     if (error) {
-      setError("Google sign-in failed. Try again.")
+      setError("Google sign-in failed. Try again.");
     }
     onOpenChange(false);
   };
@@ -102,8 +116,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -113,7 +127,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             {isSignUp ? "Create your account" : "Welcome back"}
           </DialogTitle>
           <DialogDescription className="text-center">
-            {isSignUp ? "Start creating viral clips with AI in seconds" : "Sign in to continue to clipfarm.dev"}
+            {isSignUp
+              ? "Start creating viral clips with AI in seconds"
+              : "Sign in to continue to clipfarm.dev"}
           </DialogDescription>
         </DialogHeader>
 
@@ -173,7 +189,11 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-muted-foreground hover:text-foreground hover:cursor-pointer"
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </button>
             </div>
           </div>
@@ -191,32 +211,49 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             <Separator className="w-full" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" className="w-full bg-transparent hover:cursor-pointer" onClick={handleGoogleSignIn}>
+          <Button
+            variant="outline"
+            className="w-full bg-transparent hover:cursor-pointer"
+            onClick={handleGoogleSignIn}
+          >
             <Chrome className="w-5 h-5 m-2"></Chrome>
             Google
           </Button>
-          <Button variant="outline" className="w-full bg-transparent hover:cursor-pointer" onClick={handleGitHubSignIn}>
+          <Button
+            variant="outline"
+            className="w-full bg-transparent hover:cursor-pointer"
+            onClick={handleGitHubSignIn}
+          >
             <Github className="w-5 h-5 m-2"></Github>
             GitHub
           </Button>
         </div>
-        {error ? 
-        
+        {error ? (
           <Alert className="bg-gradient-to-r from-red-400 to-pink-400 rounded-lg">
             <Ban></Ban>
-            {isSignUp ? <AlertTitle className="font-medium text-white">SIGN UP ERROR!</AlertTitle> : 
-            <AlertTitle className="font-medium text-white">LOGIN ERROR!</AlertTitle>
-            }
-            <AlertDescription className="text-sm text-white mt-1">{error}</AlertDescription>
+            {isSignUp ? (
+              <AlertTitle className="font-medium text-white">
+                SIGN UP ERROR!
+              </AlertTitle>
+            ) : (
+              <AlertTitle className="font-medium text-white">
+                LOGIN ERROR!
+              </AlertTitle>
+            )}
+            <AlertDescription className="text-sm text-white mt-1">
+              {error}
+            </AlertDescription>
           </Alert>
-        :
-        <div></div>}
-        
+        ) : (
+          <div></div>
+        )}
 
         <div className="text-center text-sm">
           {isSignUp ? (
@@ -245,5 +282,5 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

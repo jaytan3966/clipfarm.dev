@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabaseClient"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useAuth } from "@/context/authContext"
-import { useUserProfile } from "@/context/userProfileContext"
-import { useDarkMode } from "@/context/darkModeContext"
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/context/authContext";
+import { useUserProfile } from "@/context/userProfileContext";
+import { useDarkMode } from "@/context/darkModeContext";
 import {
   Sidebar,
   SidebarContent,
@@ -27,10 +27,19 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Video,
   Scissors,
@@ -53,33 +62,33 @@ import {
   Mail,
   Save,
   Camera,
-} from "lucide-react"
+} from "lucide-react";
 
 function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
-  const router = useRouter()
+  const router = useRouter();
   const [openSections, setOpenSections] = useState({
     pastClips: true,
     tokens: false,
     generate: false,
-  })
+  });
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections((prev) => ({
       ...prev,
       [section]: !prev[section],
-    }))
-  }
+    }));
+  };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("Error signing out:", error.message)
+      console.error("Error signing out:", error.message);
     } else {
-      router.push("/")
+      router.push("/");
     }
-  }
+  };
 
-  const user = useUserProfile()
+  const user = useUserProfile();
 
   const pastClipsItems = [
     { title: "All Clips", count: 127, icon: Video },
@@ -87,30 +96,42 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
     { title: "Completed", count: 115, icon: CheckCircle },
     { title: "Processing", count: 3, icon: Clock },
     { title: "Failed", count: 9, icon: AlertCircle },
-  ]
+  ];
 
   const tokenItems = [
     { title: "Current Balance", value: "2,450 tokens", icon: Coins },
     { title: "Usage This Month", value: "1,200 tokens", icon: History },
     { title: "Buy More Tokens", action: true, icon: CreditCard },
     { title: "Payment History", action: true, icon: History },
-  ]
+  ];
 
   const generateItems = [
-    { title: "Quick Generate", description: "Upload & auto-clip", icon: Sparkles },
+    {
+      title: "Quick Generate",
+      description: "Upload & auto-clip",
+      icon: Sparkles,
+    },
     { title: "Batch Process", description: "Multiple videos", icon: Video },
-    { title: "Custom Settings", description: "Advanced options", icon: Settings },
-  ]
+    {
+      title: "Custom Settings",
+      description: "Advanced options",
+      icon: Settings,
+    },
+  ];
 
   return (
     <Sidebar
       className={`border-r shadow-sm hover:cursor-pointer transition-all duration-200 ease-in-out ${
-        isDarkMode ? "border-gray-700 bg-gray-900" : "border-purple-200 bg-white"
+        isDarkMode
+          ? "border-gray-700 bg-gray-900"
+          : "border-purple-200 bg-white"
       }`}
     >
       <SidebarHeader
         className={`border-b transition-colors duration-200 ease-in-out ${
-          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+          isDarkMode
+            ? "border-gray-700 bg-gray-800"
+            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
         }`}
       >
         <div className="flex items-center space-x-2 px-4 py-3">
@@ -137,7 +158,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-700 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -165,7 +188,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                         onClick={() => router.push("/pages/dashboard")}
                       >
                         <div className="flex items-center space-x-2">
-                          <item.icon className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
+                          <item.icon
+                            className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                          />
                           <span className="text-sm">{item.title}</span>
                         </div>
                       </SidebarMenuButton>
@@ -187,12 +212,16 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-700 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
                   <Coins className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold text-sm">Tokens & Payments</span>
+                  <span className="font-semibold text-sm">
+                    Tokens & Payments
+                  </span>
                 </div>
                 <ChevronDown
                   className={`h-4 w-4 transition-transform duration-200 ease-in-out ${
@@ -220,9 +249,13 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                         <div className="flex items-center space-x-2">
                           <item.icon className="h-4 w-4" />
                           <div className="flex flex-col">
-                            <span className="text-sm font-medium">{item.title}</span>
+                            <span className="text-sm font-medium">
+                              {item.title}
+                            </span>
                             {item.value && (
-                              <span className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                              <span
+                                className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                              >
                                 {item.value}
                               </span>
                             )}
@@ -247,7 +280,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "hover:bg-gray-700 text-gray-100" : "hover:bg-purple-50 text-gray-900"
+                  isDarkMode
+                    ? "hover:bg-gray-700 text-gray-100"
+                    : "hover:bg-purple-50 text-gray-900"
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -274,10 +309,16 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                         }`}
                       >
                         <div className="flex items-center space-x-2">
-                          <item.icon className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
+                          <item.icon
+                            className={`h-4 w-4 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                          />
                           <div className="flex flex-col">
-                            <span className="text-sm font-medium">{item.title}</span>
-                            <span className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                            <span className="text-sm font-medium">
+                              {item.title}
+                            </span>
+                            <span
+                              className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                            >
                               {item.description}
                             </span>
                           </div>
@@ -294,7 +335,9 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
 
       <SidebarFooter
         className={`border-t transition-colors duration-200 ease-in-out ${
-          isDarkMode ? "border-gray-700 bg-gray-800" : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
+          isDarkMode
+            ? "border-gray-700 bg-gray-800"
+            : "border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50"
         }`}
       >
         <SidebarMenu>
@@ -313,22 +356,30 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col text-left hover:cursor-pointer">
-                    <span className={`text-sm font-medium ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}>
+                    <span
+                      className={`text-sm font-medium ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
+                    >
                       {user ? user.username : "null"}
                     </span>
-                    <span className="text-xs text-purple-600 font-medium">Pro Plan</span>
+                    <span className="text-xs text-purple-600 font-medium">
+                      Pro Plan
+                    </span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
                 className={`w-56 transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "bg-gray-800 border-gray-700 text-gray-100" : "text-gray-900"
+                  isDarkMode
+                    ? "bg-gray-800 border-gray-700 text-gray-100"
+                    : "text-gray-900"
                 }`}
               >
                 <DropdownMenuItem
                   className={`hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "hover:bg-gray-700 bg-gray-700" : "hover:bg-purple-50 bg-purple-100"
+                    isDarkMode
+                      ? "hover:bg-gray-700 bg-gray-700"
+                      : "hover:bg-purple-50 bg-purple-100"
                   }`}
                   onClick={() => router.push("/pages/account")}
                 >
@@ -359,18 +410,21 @@ function AppSidebar({ isDarkMode }: { isDarkMode: boolean }) {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
 
 export default function AccountPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const [isSaving, setIsSaving] = useState(false)
-  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null)
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
-  const session = useAuth()
-  const user = useUserProfile()
+  const session = useAuth();
+  const user = useUserProfile();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -378,18 +432,18 @@ export default function AccountPage() {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-  })
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSaveProfile = async () => {
-    setIsSaving(true)
-    setAlert(null)
+    setIsSaving(true);
+    setAlert(null);
 
     try {
       const response = await fetch("/api/accountInfo", {
@@ -399,48 +453,51 @@ export default function AccountPage() {
           Authorization: `Bearer ${session?.access_token}`,
         },
         body: JSON.stringify({
-          username: formData.username !== user?.username ? formData.username : undefined,
+          username:
+            formData.username !== user?.username
+              ? formData.username
+              : undefined,
           email: formData.email !== user?.email ? formData.email : undefined,
         }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to update profile")
+        throw new Error(data.error || "Failed to update profile");
       }
 
       if (formData.newPassword) {
         setFormData((prev) => ({
           ...prev,
           currentPassword: "",
-        }))
+        }));
       }
 
-      setAlert({ type: "success", message: data.message })
-    } catch  {
-      setAlert({ type: "error", message: "Failed to update profile" })
+      setAlert({ type: "success", message: data.message });
+    } catch {
+      setAlert({ type: "error", message: "Failed to update profile" });
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (session === null) {
-      router.push("/")
+      router.push("/");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
       if (user) {
         setFormData((prev) => ({
           ...prev,
           username: user.username || "",
           email: user.email || "",
-        }))
+        }));
       }
     }
-  }, [session, router, user])
+  }, [session, router, user]);
 
-  if (isLoading) return null
+  if (isLoading) return null;
 
   return (
     <SidebarProvider>
@@ -455,12 +512,16 @@ export default function AccountPage() {
         <SidebarInset className="flex-1 transition-all duration-200 ease-in-out">
           <header
             className={`flex h-16 shrink-0 items-center gap-2 border-b backdrop-blur-sm px-6 shadow-sm transition-colors duration-200 ease-in-out ${
-              isDarkMode ? "border-gray-700 bg-gray-900/90" : "border-purple-200 bg-white/90"
+              isDarkMode
+                ? "border-gray-700 bg-gray-900/90"
+                : "border-purple-200 bg-white/90"
             }`}
           >
             <SidebarTrigger
               className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                isDarkMode
+                  ? "text-gray-400 hover:text-gray-100"
+                  : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
@@ -485,7 +546,9 @@ export default function AccountPage() {
                   variant="ghost"
                   size="icon"
                   className={`transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   <Bell className="h-4 w-4" />
@@ -495,10 +558,16 @@ export default function AccountPage() {
                   size="icon"
                   onClick={toggleDarkMode}
                   className={`transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
-                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -536,7 +605,9 @@ export default function AccountPage() {
 
               <Card
                 className={`shadow-sm border transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                  isDarkMode
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-white border-gray-200"
                 }`}
               >
                 <CardHeader>
@@ -583,7 +654,9 @@ export default function AccountPage() {
 
               <Card
                 className={`shadow-sm border transition-colors duration-200 ease-in-out ${
-                  isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                  isDarkMode
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-white border-gray-200"
                 }`}
               >
                 <CardHeader>
@@ -681,5 +754,5 @@ export default function AccountPage() {
         </SidebarInset>
       </div>
     </SidebarProvider>
-  )
+  );
 }
