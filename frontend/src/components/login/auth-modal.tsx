@@ -1,51 +1,57 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { supabase } from "@/lib/supabaseClient"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Scissors, Mail, Lock, User, Eye, EyeOff, Ban } from "lucide-react"
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Scissors, Mail, Lock, User, Eye, EyeOff, Ban } from "lucide-react";
 
 interface AuthModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function AuthModal({ open, onOpenChange }: AuthModalProps) {
-  const [isSignUp, setIsSignUp] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-  })
-  const [error, setError] = useState("")
+  });
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setError("")
-  }, [isSignUp])
+    setError("");
+  }, [isSignUp]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     if (!formData.email.includes("@")) {
-      setError("Please enter a valid email.")
-      setLoading(false)
-      return
+      setError("Please enter a valid email.");
+      setLoading(false);
+      return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters.")
-      setLoading(false)
-      return
+      setError("Password must be at least 6 characters.");
+      setLoading(false);
+      return;
     }
 
     const username = formData.username;
@@ -64,12 +70,12 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       : await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
-        })
+        });
 
     if (authError) {
-      setError(authError.message)
-      setLoading(false)
-      return
+      setError(authError.message);
+      setLoading(false);
+      return;
     }
 
     const session = await supabase.auth.getSession();
@@ -88,26 +94,26 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         }),
       });
       if (!response.ok) {
-        const errorData = await response.json()
-        setError(errorData.message || "An error occurred during sign up.")
-        setLoading(false)
-        return
+        const errorData = await response.json();
+        setError(errorData.message || "An error occurred during sign up.");
+        setLoading(false);
+        return;
       }
-      setError("Check your email for the confirmation link!")
-      setLoading(false)
+      setError("Check your email for the confirmation link!");
+      setLoading(false);
       return;
     }
 
-    onOpenChange(false)
-    setLoading(false)
-  }
+    onOpenChange(false);
+    setLoading(false);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -126,7 +132,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             <div className="flex bg-gray-800 rounded-lg p-1">
               <div
                 className={`absolute top-1 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md transition-all duration-300 ease-in-out ${
-                  isSignUp ? "left-1/2 w-[calc(50%-4px)]" : "left-1 w-[calc(50%-4px)]"
+                  isSignUp
+                    ? "left-1/2 w-[calc(50%-4px)]"
+                    : "left-1 w-[calc(50%-4px)]"
                 }`}
               />
               <button
@@ -150,9 +158,13 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             </div>
           </div>
 
-          <DialogTitle className="text-2xl font-bold">{isSignUp ? "Create your account" : "Welcome back"}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">
+            {isSignUp ? "Create your account" : "Welcome back"}
+          </DialogTitle>
           <DialogDescription>
-            {isSignUp ? "Start creating viral clips with AI in seconds" : "Sign in to continue to clipfarm.dev"}
+            {isSignUp
+              ? "Start creating viral clips with AI in seconds"
+              : "Sign in to continue to clipfarm.dev"}
           </DialogDescription>
         </DialogHeader>
 
@@ -201,7 +213,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder={isSignUp ? "Create a password" : "Enter your password"}
+                placeholder={
+                  isSignUp ? "Create a password" : "Enter your password"
+                }
                 value={formData.password}
                 onChange={handleInputChange}
                 className="pl-10 pr-10"
@@ -212,7 +226,11 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </button>
             </div>
           </div>
@@ -222,18 +240,28 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
             disabled={loading}
           >
-            {loading ? (isSignUp ? "Creating account..." : "Signing in...") : isSignUp ? "Create Account" : "Sign In"}
+            {loading
+              ? isSignUp
+                ? "Creating account..."
+                : "Signing in..."
+              : isSignUp
+                ? "Create Account"
+                : "Sign In"}
           </Button>
         </form>
 
         {error && (
           <Alert className="bg-gradient-to-r from-red-400 to-pink-400 rounded-lg">
             <Ban className="h-4 w-4" />
-            <AlertTitle className="font-medium text-white">{isSignUp ? "SIGN UP ERROR!" : "LOGIN ERROR!"}</AlertTitle>
-            <AlertDescription className="text-sm text-white mt-1">{error}</AlertDescription>
+            <AlertTitle className="font-medium text-white">
+              {isSignUp ? "SIGN UP ERROR!" : "LOGIN ERROR!"}
+            </AlertTitle>
+            <AlertDescription className="text-sm text-white mt-1">
+              {error}
+            </AlertDescription>
           </Alert>
         )}
       </DialogContent>
     </Dialog>
-  )
+  );
 }
