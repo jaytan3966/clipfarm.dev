@@ -1,77 +1,79 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-  Mail,
-  Lock,
-  User,
-  Eye,
-  EyeOff,
-  Github,
-  Chrome,
-  Ban,
-} from "lucide-react";
-import { supabase } from "@/lib/supabaseClient";
+import { useState, useEffect } from "react"
+import { supabase } from "@/lib/supabaseClient"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Scissors, Mail, Lock, User, Eye, EyeOff, Ban } from "lucide-react"
 
 interface AuthModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 export function AuthModal({ open, onOpenChange }: AuthModalProps) {
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-  });
-  const [error, setError] = useState("");
+  })
+  const [error, setError] = useState("")
 
   useEffect(() => {
-    setError("");
-  }, [isSignUp]);
+    setError("")
+  }, [isSignUp])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
+    setLoading(true)
+    setError("")
 
     if (!formData.email.includes("@")) {
-      setError("Please enter a valid email.");
-      return;
+      setError("Please enter a valid email.")
+      setLoading(false)
+      return
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
+      setError("Password must be at least 6 characters.")
+      setLoading(false)
+      return
     }
+
     const username = formData.username;
     const email = formData.email;
-    const password = formData.password;
+
     const { data, error: authError } = isSignUp
-      ? await supabase.auth.signUp({ email, password })
-      : await supabase.auth.signInWithPassword({ email, password });
+      ? await supabase.auth.signUp({
+          email: email,
+          password: formData.password,
+          options: {
+            data: {
+              name: username,
+            },
+          },
+        })
+      : await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        })
 
     if (authError) {
-      setError(authError.message);
-      return;
+      setError(authError.message)
+      setLoading(false)
+      return
     }
 
     const session = await supabase.auth.getSession();
-    const token = session?.data?.session?.access_token;
+    const token = session.data.session?.access_token;
     if (isSignUp) {
       const response = await fetch("/api/supabase-auth", {
         method: "POST",
@@ -86,57 +88,78 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         }),
       });
       if (!response.ok) {
-        setError(`User insertion error: user already exists.`);
-        return;
+        const errorData = await response.json()
+        setError(errorData.message || "An error occurred during sign up.")
+        setLoading(false)
+        return
       }
+      setError("Check your email for the confirmation link!")
+      setLoading(false)
+      return;
     }
-    onOpenChange(false);
-  };
 
-  const handleGitHubSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
-    if (error) {
-      setError("Github sign-in failed. Try again.");
-    }
-    onOpenChange(false);
-  };
-  const handleGoogleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error) {
-      setError("Google sign-in failed. Try again.");
-    }
-    onOpenChange(false);
-  };
+    onOpenChange(false)
+    setLoading(false)
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md bg-gray-950">
-        <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold">
-            {isSignUp ? "Create your account" : "Welcome back"}
-          </DialogTitle>
-          <DialogDescription className="text-center">
-            {isSignUp
-              ? "Start creating viral clips with AI in seconds"
-              : "Sign in to continue to clipfarm.dev"}
+        <DialogHeader className="text-center">
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-pink-500">
+              <Scissors className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              clipfarm.dev
+            </span>
+          </div>
+
+          <div className="relative mb-6">
+            <div className="flex bg-gray-800 rounded-lg p-1">
+              <div
+                className={`absolute top-1 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md transition-all duration-300 ease-in-out ${
+                  isSignUp ? "left-1/2 w-[calc(50%-4px)]" : "left-1 w-[calc(50%-4px)]"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setIsSignUp(false)}
+                className={`relative z-10 flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors duration-300 ${
+                  !isSignUp ? "text-white" : "text-gray-400 hover:text-gray-300"
+                }`}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsSignUp(true)}
+                className={`relative z-10 flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors duration-300 ${
+                  isSignUp ? "text-white" : "text-gray-400 hover:text-gray-300"
+                }`}
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+
+          <DialogTitle className="text-2xl font-bold">{isSignUp ? "Create your account" : "Welcome back"}</DialogTitle>
+          <DialogDescription>
+            {isSignUp ? "Start creating viral clips with AI in seconds" : "Sign in to continue to clipfarm.dev"}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {isSignUp && (
             <div className="space-y-2">
-              <Label htmlFor="name">Username</Label>
+              <Label htmlFor="username">Username</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -178,7 +201,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                placeholder={isSignUp ? "Create a password" : "Enter your password"}
                 value={formData.password}
                 onChange={handleInputChange}
                 className="pl-10 pr-10"
@@ -187,100 +210,30 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground hover:cursor-pointer"
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
               >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:cursor-pointer"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+            disabled={loading}
           >
-            {isSignUp ? "Create Account" : "Sign In"}
+            {loading ? (isSignUp ? "Creating account..." : "Signing in...") : isSignUp ? "Create Account" : "Sign In"}
           </Button>
         </form>
 
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <Separator className="w-full" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Button
-            variant="outline"
-            className="w-full bg-transparent hover:cursor-pointer"
-            onClick={handleGoogleSignIn}
-          >
-            <Chrome className="w-5 h-5 m-2"></Chrome>
-            Google
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full bg-transparent hover:cursor-pointer"
-            onClick={handleGitHubSignIn}
-          >
-            <Github className="w-5 h-5 m-2"></Github>
-            GitHub
-          </Button>
-        </div>
-        {error ? (
+        {error && (
           <Alert className="bg-gradient-to-r from-red-400 to-pink-400 rounded-lg">
-            <Ban></Ban>
-            {isSignUp ? (
-              <AlertTitle className="font-medium text-white">
-                SIGN UP ERROR!
-              </AlertTitle>
-            ) : (
-              <AlertTitle className="font-medium text-white">
-                LOGIN ERROR!
-              </AlertTitle>
-            )}
-            <AlertDescription className="text-sm text-white mt-1">
-              {error}
-            </AlertDescription>
+            <Ban className="h-4 w-4" />
+            <AlertTitle className="font-medium text-white">{isSignUp ? "SIGN UP ERROR!" : "LOGIN ERROR!"}</AlertTitle>
+            <AlertDescription className="text-sm text-white mt-1">{error}</AlertDescription>
           </Alert>
-        ) : (
-          <div></div>
         )}
-
-        <div className="text-center text-sm">
-          {isSignUp ? (
-            <p>
-              Already have an account?{" "}
-              <button
-                type="button"
-                onClick={() => setIsSignUp(false)}
-                className="text-purple-600 hover:text-purple-500 font-medium hover:cursor-pointer"
-              >
-                Sign in
-              </button>
-            </p>
-          ) : (
-            <p>
-              Don&apos;t have an account?{" "}
-              <button
-                type="button"
-                onClick={() => setIsSignUp(true)}
-                className="text-purple-600 hover:text-purple-500 font-medium hover:cursor-pointer"
-              >
-                Sign up
-              </button>
-            </p>
-          )}
-        </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
