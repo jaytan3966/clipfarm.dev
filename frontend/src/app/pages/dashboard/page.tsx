@@ -1,21 +1,26 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
-import Image from "next/image"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useAuth } from "@/context/authContext"
-import { useDarkMode } from "@/context/darkModeContext"
+import Image from "next/image";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/context/authContext";
+import { useDarkMode } from "@/context/darkModeContext";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+} from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Plus,
   Play,
@@ -30,12 +35,12 @@ import {
   Trash,
   MoonStar,
   Sun,
-} from "lucide-react"
+} from "lucide-react";
 
-import AppSidebar from "@/components/sidebar"
+import AppSidebar from "@/components/sidebar";
 
 export default function Dashboard() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   // Mock data for past clips
   const pastClips = [
@@ -89,20 +94,20 @@ export default function Dashboard() {
       created: "3 days ago",
       platform: "TikTok",
     },
-  ]
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const session = useAuth()
+  ];
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const session = useAuth();
 
   useEffect(() => {
     if (session === null) {
-      router.push("/")
+      router.push("/");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [session, router])
+  }, [session, router]);
 
-  if (isLoading) return null
+  if (isLoading) return null;
 
   return (
     <SidebarProvider>
@@ -125,7 +130,9 @@ export default function Dashboard() {
           >
             <SidebarTrigger
               className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-all duration-200 ${
-                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                isDarkMode
+                  ? "text-gray-400 hover:text-gray-100"
+                  : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
@@ -146,7 +153,9 @@ export default function Dashboard() {
                   variant="ghost"
                   size="icon"
                   className={`transition-all duration-200 ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   <Bell className="h-4 w-4" />
@@ -155,11 +164,17 @@ export default function Dashboard() {
                   variant="ghost"
                   size="icon"
                   className={`transition-all duration-200 ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                   onClick={toggleDarkMode}
                 >
-                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -175,7 +190,9 @@ export default function Dashboard() {
               >
                 Your Clips
               </h2>
-              <p className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+              <p
+                className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+              >
                 Create new clips or manage your existing ones
               </p>
             </div>
@@ -212,7 +229,9 @@ export default function Dashboard() {
                 <Card
                   key={clip.id}
                   className={`overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border pt-0 ${
-                    isDarkMode ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700 hover:shadow-gray-900/50"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <div className="relative">
@@ -257,7 +276,10 @@ export default function Dashboard() {
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-black/60 text-white backdrop-blur-sm">
+                        <DropdownMenuContent
+                          align="end"
+                          className="bg-black/60 text-white backdrop-blur-sm"
+                        >
                           <DropdownMenuItem>
                             <Play className="mr-2 h-4 w-4" />
                             Preview
@@ -278,7 +300,9 @@ export default function Dashboard() {
                       </DropdownMenu>
                     </div>
                   </div>
-                  <CardContent className={`transition-all duration-200 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+                  <CardContent
+                    className={`transition-all duration-200 ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+                  >
                     <h3
                       className={`font-semibold text-sm mb-2 line-clamp-2 transition-colors duration-200 ${isDarkMode ? "text-gray-100" : "text-gray-900"}`}
                     >
@@ -294,7 +318,9 @@ export default function Dashboard() {
                       className={`flex items-center space-x-1 text-xs transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                     >
                       <Eye className="h-3 w-3" />
-                      <span className="font-medium">{clip.views.toLocaleString()} views</span>
+                      <span className="font-medium">
+                        {clip.views.toLocaleString()} views
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -304,5 +330,5 @@ export default function Dashboard() {
         </SidebarInset>
       </div>
     </SidebarProvider>
-  )
+  );
 }

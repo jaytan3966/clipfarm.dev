@@ -1,42 +1,63 @@
-"use client"
+"use client";
 
-import { useState, useCallback, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { useAuth } from "@/context/authContext"
-import { useDarkMode } from "@/context/darkModeContext"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Upload, Video, FileVideo, Clock, Settings, CheckCircle, X, Bell, MoonStar, Sun } from "lucide-react"
-import { useDropzone } from "react-dropzone"
-import AppSidebar from "@/components/sidebar"
+import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/context/authContext";
+import { useDarkMode } from "@/context/darkModeContext";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import {
+  Upload,
+  Video,
+  FileVideo,
+  Clock,
+  Settings,
+  CheckCircle,
+  X,
+  Bell,
+  MoonStar,
+  Sun,
+} from "lucide-react";
+import { useDropzone } from "react-dropzone";
+import AppSidebar from "@/components/sidebar";
 
 export default function UploadPage() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
-  const router = useRouter()
-  const session = useAuth()
-  const [isLoading, setIsLoading] = useState(true)
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const [isUploading, setIsUploading] = useState(false)
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const router = useRouter();
+  const session = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [clipSettings, setClipSettings] = useState({
     platform: "youtube-shorts",
     title: "",
     description: "",
-  })
+  });
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0]
+    const file = acceptedFiles[0];
     if (file) {
-      setUploadedFile(file)
+      setUploadedFile(file);
     }
-  }, [])
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -44,54 +65,56 @@ export default function UploadPage() {
       "video/*": [".mp4", ".mov", ".avi", ".mkv", ".webm"],
     },
     maxFiles: 1,
-  })
+  });
 
   const handleUpload = async () => {
-    if (!uploadedFile) return
+    if (!uploadedFile) return;
 
-    setIsUploading(true)
-    setUploadProgress(0)
+    setIsUploading(true);
+    setUploadProgress(0);
 
     // Simulate upload progress
     const interval = setInterval(() => {
       setUploadProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval)
-          setIsUploading(false)
+          clearInterval(interval);
+          setIsUploading(false);
           // Redirect to dashboard after successful upload
           setTimeout(() => {
-            router.push("/dashboard")
-          }, 1000)
-          return 100
+            router.push("/dashboard");
+          }, 1000);
+          return 100;
         }
-        return prev + 10
-      })
-    }, 200)
-  }
+        return prev + 10;
+      });
+    }, 200);
+  };
 
   const removeFile = () => {
-    setUploadedFile(null)
-    setUploadProgress(0)
-    setIsUploading(false)
-  }
+    setUploadedFile(null);
+    setUploadProgress(0);
+    setIsUploading(false);
+  };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes"
-    const k = 1024
-    const sizes = ["Bytes", "KB", "MB", "GB"]
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
-  }
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (
+      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+    );
+  };
 
   useEffect(() => {
     if (session === null) {
-      router.push("/")
+      router.push("/");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [session, router])
+  }, [session, router]);
 
-  if (isLoading) return null
+  if (isLoading) return null;
 
   return (
     <SidebarProvider>
@@ -106,12 +129,16 @@ export default function UploadPage() {
         <SidebarInset className="flex-1 transition-all duration-200 ease-in-out">
           <header
             className={`flex h-16 shrink-0 items-center gap-2 border-b backdrop-blur-sm px-6 shadow-sm transition-colors duration-200 ease-in-out ${
-              isDarkMode ? "border-gray-700 bg-gray-900/90" : "border-purple-200 bg-white/90"
+              isDarkMode
+                ? "border-gray-700 bg-gray-900/90"
+                : "border-purple-200 bg-white/90"
             }`}
           >
             <SidebarTrigger
               className={`-ml-1 w-8 h-8 hover:cursor-pointer transition-colors duration-200 ease-in-out ${
-                isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                isDarkMode
+                  ? "text-gray-400 hover:text-gray-100"
+                  : "text-gray-600 hover:text-gray-900"
               }`}
             />
             <div className="flex flex-1 items-center justify-between">
@@ -128,7 +155,8 @@ export default function UploadPage() {
                     isDarkMode ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
-                  Quickly upload your completed clips to Reels, TikTok, Shorts, or all three
+                  Quickly upload your completed clips to Reels, TikTok, Shorts,
+                  or all three
                 </p>
               </div>
               <div className="flex items-center space-x-2">
@@ -136,7 +164,9 @@ export default function UploadPage() {
                   variant="ghost"
                   size="icon"
                   className={`transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
                   <Bell className="h-4 w-4" />
@@ -146,10 +176,16 @@ export default function UploadPage() {
                   size="icon"
                   onClick={toggleDarkMode}
                   className={`transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "text-gray-400 hover:text-gray-100" : "text-gray-600 hover:text-gray-900"
+                    isDarkMode
+                      ? "text-gray-400 hover:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
-                  {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -160,7 +196,9 @@ export default function UploadPage() {
               <div className="grid gap-8 lg:grid-cols-2">
                 <Card
                   className={`shadow-sm border transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader>
@@ -198,7 +236,9 @@ export default function UploadPage() {
                                 isDarkMode ? "text-gray-100" : "text-gray-900"
                               }`}
                             >
-                              {isDragActive ? "Drop your video here" : "Drag & drop your video here"}
+                              {isDragActive
+                                ? "Drop your video here"
+                                : "Drag & drop your video here"}
                             </p>
                             <p
                               className={`text-sm mt-1 transition-colors duration-200 ${
@@ -209,24 +249,30 @@ export default function UploadPage() {
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-2 justify-center">
-                            {["MP4", "MOV", "AVI", "MKV", "WEBM"].map((format) => (
-                              <Badge
-                                key={format}
-                                variant="secondary"
-                                className={`text-xs transition-all duration-200 ${
-                                  isDarkMode ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-700"
-                                }`}
-                              >
-                                {format}
-                              </Badge>
-                            ))}
+                            {["MP4", "MOV", "AVI", "MKV", "WEBM"].map(
+                              (format) => (
+                                <Badge
+                                  key={format}
+                                  variant="secondary"
+                                  className={`text-xs transition-all duration-200 ${
+                                    isDarkMode
+                                      ? "bg-gray-700 text-gray-300"
+                                      : "bg-gray-100 text-gray-700"
+                                  }`}
+                                >
+                                  {format}
+                                </Badge>
+                              ),
+                            )}
                           </div>
                         </div>
                       </div>
                     ) : (
                       <div
                         className={`border rounded-lg p-4 transition-all duration-200 ${
-                          isDarkMode ? "border-gray-600 bg-gray-900/50" : "border-gray-200 bg-gray-50"
+                          isDarkMode
+                            ? "border-gray-600 bg-gray-900/50"
+                            : "border-gray-200 bg-gray-50"
                         }`}
                       >
                         <div className="flex items-center justify-between">
@@ -271,7 +317,9 @@ export default function UploadPage() {
                               <span
                                 className={`transition-colors duration-200 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
                               >
-                                {uploadProgress < 100 ? "Uploading..." : "Upload Complete!"}
+                                {uploadProgress < 100
+                                  ? "Uploading..."
+                                  : "Upload Complete!"}
                               </span>
                               <span
                                 className={`transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
@@ -289,7 +337,9 @@ export default function UploadPage() {
 
                 <Card
                   className={`shadow-sm border transition-colors duration-200 ease-in-out ${
-                    isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <CardHeader>
@@ -311,7 +361,9 @@ export default function UploadPage() {
                       </Label>
                       <Select
                         value={clipSettings.platform}
-                        onValueChange={(value) => setClipSettings({ ...clipSettings, platform: value })}
+                        onValueChange={(value) =>
+                          setClipSettings({ ...clipSettings, platform: value })
+                        }
                       >
                         <SelectTrigger
                           className={`transition-all duration-200 ${
@@ -325,19 +377,36 @@ export default function UploadPage() {
                         <SelectContent
                           className={`${isDarkMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"}`}
                         >
-                          <SelectItem value="youtube-shorts" className={isDarkMode ? "text-gray-100" : "text-gray-900"}>
+                          <SelectItem
+                            value="youtube-shorts"
+                            className={
+                              isDarkMode ? "text-gray-100" : "text-gray-900"
+                            }
+                          >
                             YouTube Shorts
                           </SelectItem>
-                          <SelectItem value="tiktok" className={isDarkMode ? "text-gray-100" : "text-gray-900"}>
+                          <SelectItem
+                            value="tiktok"
+                            className={
+                              isDarkMode ? "text-gray-100" : "text-gray-900"
+                            }
+                          >
                             TikTok
                           </SelectItem>
                           <SelectItem
                             value="instagram-reels"
-                            className={isDarkMode ? "text-gray-100" : "text-gray-900"}
+                            className={
+                              isDarkMode ? "text-gray-100" : "text-gray-900"
+                            }
                           >
                             Instagram Reels
                           </SelectItem>
-                          <SelectItem value="twitter" className={isDarkMode ? "text-gray-100" : "text-gray-900"}>
+                          <SelectItem
+                            value="twitter"
+                            className={
+                              isDarkMode ? "text-gray-100" : "text-gray-900"
+                            }
+                          >
                             Twitter/X
                           </SelectItem>
                         </SelectContent>
@@ -353,7 +422,12 @@ export default function UploadPage() {
                       <Input
                         placeholder="Enter a custom title for your clip"
                         value={clipSettings.title}
-                        onChange={(e) => setClipSettings({ ...clipSettings, title: e.target.value })}
+                        onChange={(e) =>
+                          setClipSettings({
+                            ...clipSettings,
+                            title: e.target.value,
+                          })
+                        }
                         className={`transition-all duration-200 ${
                           isDarkMode
                             ? "bg-gray-900 border-gray-600 text-gray-100 placeholder:text-gray-500"
@@ -371,7 +445,12 @@ export default function UploadPage() {
                       <Textarea
                         placeholder="Add a description for your clip"
                         value={clipSettings.description}
-                        onChange={(e) => setClipSettings({ ...clipSettings, description: e.target.value })}
+                        onChange={(e) =>
+                          setClipSettings({
+                            ...clipSettings,
+                            description: e.target.value,
+                          })
+                        }
                         className={`transition-all duration-200 resize-none ${
                           isDarkMode
                             ? "bg-gray-900 border-gray-600 text-gray-100 placeholder:text-gray-500"
@@ -412,7 +491,9 @@ export default function UploadPage() {
               <div className="mt-12 grid gap-6 md:grid-cols-2">
                 <Card
                   className={`text-center transition-all duration-200 ${
-                    isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <CardContent className="pt-6">
@@ -429,14 +510,17 @@ export default function UploadPage() {
                     <p
                       className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                     >
-                      Upload your finished clips directly to multiple platforms in seconds
+                      Upload your finished clips directly to multiple platforms
+                      in seconds
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card
                   className={`text-center transition-all duration-200 ${
-                    isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
                   }`}
                 >
                   <CardContent className="pt-6">
@@ -453,7 +537,8 @@ export default function UploadPage() {
                     <p
                       className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
                     >
-                      Your clips are ready to go on TikTok, Instagram Reels, and YouTube Shorts
+                      Your clips are ready to go on TikTok, Instagram Reels, and
+                      YouTube Shorts
                     </p>
                   </CardContent>
                 </Card>
@@ -463,5 +548,5 @@ export default function UploadPage() {
         </SidebarInset>
       </div>
     </SidebarProvider>
-  )
+  );
 }

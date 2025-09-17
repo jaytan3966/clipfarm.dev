@@ -41,7 +41,7 @@ import {
 } from "lucide-react";
 import { useDarkMode } from "@/context/darkModeContext";
 
-import AppSidebar from "@/components/sidebar"
+import AppSidebar from "@/components/sidebar";
 
 export default function BillingPage() {
   const router = useRouter();
