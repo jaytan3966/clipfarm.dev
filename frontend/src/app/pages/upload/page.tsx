@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -50,7 +52,9 @@ export default function UploadPage() {
     platform: "youtube-shorts",
     title: "",
     description: "",
+    tags: [] as string[],
   });
+  const [currentTag, setCurrentTag] = useState("");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -106,6 +110,36 @@ export default function UploadPage() {
     );
   };
 
+  const addTag = () => {
+    if (currentTag.trim() && !clipSettings.tags.includes(currentTag.trim())) {
+      setClipSettings({
+        ...clipSettings,
+        tags: [...clipSettings.tags, currentTag.trim()],
+      });
+      setCurrentTag("");
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    console.log("[v0] Removing tag:", tagToRemove);
+    console.log("[v0] Current tags before removal:", clipSettings.tags);
+
+    const newTags = clipSettings.tags.filter((tag) => tag !== tagToRemove);
+    console.log("[v0] New tags after filtering:", newTags);
+
+    setClipSettings({
+      ...clipSettings,
+      tags: newTags,
+    });
+  };
+
+  const handleTagKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTag();
+    }
+  };
+
   useEffect(() => {
     if (session === null) {
       router.push("/");
@@ -155,8 +189,8 @@ export default function UploadPage() {
                     isDarkMode ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
-                  Quickly upload your completed clips to Reels, TikTok, Shorts,
-                  or all three
+                  Quickly upload your completed clips to IG Reels, TikTok, YT
+                  Shorts, or all three
                 </p>
               </div>
               <div className="flex items-center space-x-2">
@@ -215,7 +249,7 @@ export default function UploadPage() {
                     {!uploadedFile ? (
                       <div
                         {...getRootProps()}
-                        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200 ${
+                        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-200 min-h-[320px] aspect-[9/16] max-w-[280px] mx-auto flex flex-col justify-center ${
                           isDragActive
                             ? isDarkMode
                               ? "border-purple-400 bg-purple-900/20"
@@ -246,6 +280,15 @@ export default function UploadPage() {
                               }`}
                             >
                               or click to browse files
+                            </p>
+                            <p
+                              className={`text-xs mt-2 font-medium transition-colors duration-200 ${
+                                isDarkMode
+                                  ? "text-purple-400"
+                                  : "text-purple-600"
+                              }`}
+                            >
+                              Recommended: 9:16 aspect ratio (vertical)
                             </p>
                           </div>
                           <div className="flex flex-wrap gap-2 justify-center">
@@ -459,87 +502,98 @@ export default function UploadPage() {
                         rows={3}
                       />
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
 
-              <div className="mt-8 flex justify-center">
-                <Button
-                  onClick={handleUpload}
-                  disabled={!uploadedFile || isUploading}
-                  className="px-8 py-3 text-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isUploading ? (
-                    <>
-                      <Clock className="mr-2 h-5 w-5 animate-spin" />
-                      Uploading...
-                    </>
-                  ) : uploadProgress === 100 ? (
-                    <>
-                      <CheckCircle className="mr-2 h-5 w-5" />
-                      Upload Complete!
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="mr-2 h-5 w-5" />
-                      Upload to Platform
-                    </>
-                  )}
-                </Button>
-              </div>
-
-              <div className="mt-12 grid gap-6 md:grid-cols-2">
-                <Card
-                  className={`text-center transition-all duration-200 ${
-                    isDarkMode
-                      ? "bg-gray-800 border-gray-700"
-                      : "bg-white border-gray-200"
-                  }`}
-                >
-                  <CardContent className="pt-6">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4">
-                      <Clock className="h-6 w-6 text-white" />
+                    <div className="space-y-2">
+                      <Label
+                        className={`transition-colors duration-200 ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}
+                      >
+                        Tags (Optional)
+                      </Label>
+                      <div className="space-y-3">
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder={
+                              clipSettings.platform === "youtube-shorts"
+                                ? "Add tags (#shorts included already)"
+                                : "Add tags for your clip"
+                            }
+                            value={currentTag}
+                            onChange={(e) => setCurrentTag(e.target.value)}
+                            onKeyPress={handleTagKeyPress}
+                            className={`flex-1 transition-all duration-200 ${
+                              isDarkMode
+                                ? "bg-gray-900 border-gray-600 text-gray-100 placeholder:text-gray-500"
+                                : "bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                            }`}
+                          />
+                          <Button
+                            type="button"
+                            onClick={addTag}
+                            disabled={!currentTag.trim()}
+                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white disabled:opacity-50"
+                          >
+                            Add
+                          </Button>
+                        </div>
+                        {clipSettings.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {clipSettings.tags.map((tag, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className={`flex items-center gap-1 transition-all duration-200 ${
+                                  isDarkMode
+                                    ? "bg-gray-700 text-gray-200 hover:bg-gray-600"
+                                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                                }`}
+                              >
+                                {tag}
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log(
+                                      "[v0] X button clicked for tag:",
+                                      tag,
+                                    );
+                                    removeTag(tag);
+                                  }}
+                                  className="ml-1 hover:text-red-500 focus:outline-none"
+                                >
+                                  <X className="h-3 w-3" />
+                                </button>
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <h3
-                      className={`font-semibold mb-2 transition-colors duration-200 ${
-                        isDarkMode ? "text-gray-100" : "text-gray-900"
-                      }`}
-                    >
-                      Quick Upload
-                    </h3>
-                    <p
-                      className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
-                    >
-                      Upload your finished clips directly to multiple platforms
-                      in seconds
-                    </p>
-                  </CardContent>
-                </Card>
 
-                <Card
-                  className={`text-center transition-all duration-200 ${
-                    isDarkMode
-                      ? "bg-gray-800 border-gray-700"
-                      : "bg-white border-gray-200"
-                  }`}
-                >
-                  <CardContent className="pt-6">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4">
-                      <Video className="h-6 w-6 text-white" />
+                    {/* Moved upload button inside the clip settings card */}
+                    <div className="pt-4">
+                      <Button
+                        onClick={handleUpload}
+                        disabled={!uploadedFile || isUploading}
+                        className="w-full px-8 py-3 text-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isUploading ? (
+                          <>
+                            <Clock className="mr-2 h-5 w-5 animate-spin" />
+                            Uploading...
+                          </>
+                        ) : uploadProgress === 100 ? (
+                          <>
+                            <CheckCircle className="mr-2 h-5 w-5" />
+                            Upload Complete!
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="mr-2 h-5 w-5" />
+                            Upload to Platform
+                          </>
+                        )}
+                      </Button>
                     </div>
-                    <h3
-                      className={`font-semibold mb-2 transition-colors duration-200 ${
-                        isDarkMode ? "text-gray-100" : "text-gray-900"
-                      }`}
-                    >
-                      Multi-Platform Ready
-                    </h3>
-                    <p
-                      className={`text-sm transition-colors duration-200 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
-                    >
-                      Your clips are ready to go on TikTok, Instagram Reels, and
-                      YouTube Shorts
-                    </p>
                   </CardContent>
                 </Card>
               </div>

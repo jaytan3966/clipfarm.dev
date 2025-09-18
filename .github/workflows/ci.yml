@@ -4,34 +4,33 @@ on:
   push:
     branches: ["main"]
 jobs:
-    frontend:
-      name: Frontend (Node/TypeScript)
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: frontend
-  
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-  
-        - name: Set up Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: "18"
-  
-        - name: Install dependencies
-          run: npm install
-  
-        - name: Run linter (eslint)
-          run: npm run lint
-  
-        - name: Format check (prettier)
-          run: npm run prettier:check
-  
-        - name: Type check (tsc)
-          run: npm run type-check
-  
-        - name: Run tests (jest/vitest)
-          run: npm test
+  frontend:
+    name: Frontend (Node/TypeScript)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter (eslint)
+        run: npm run lint
+
+      - name: Format check (prettier)
+        run: npm run prettier:check
+
+      - name: Type check (tsc)
+        run: npm run type-check
+
+      - name: Run tests (jest/vitest)
+        run: npm test
